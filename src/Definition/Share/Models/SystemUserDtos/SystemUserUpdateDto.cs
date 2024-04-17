@@ -1,15 +1,14 @@
 using Definition.Entity;
 
-namespace Definition.Share.Models.UserDtos;
+namespace Definition.Share.Models.SystemUserDtos;
 /// <summary>
 /// 用户账户更新时请求结构
 /// </summary>
-/// <inheritdoc cref="User"/>
-public class UserUpdateDto
+/// <inheritdoc cref="SystemUser"/>
+public class SystemUserUpdateDto
 {
-    public UserType? UserType { get; set; }
     [MaxLength(60)]
-    public string? Password { get; set; } = "123456";
+    public string? Password { get; set; }
     [EmailAddress]
     public string? Email { get; set; }
     /// <summary>

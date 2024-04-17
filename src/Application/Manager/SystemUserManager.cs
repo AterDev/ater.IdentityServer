@@ -1,13 +1,13 @@
-using Definition.Share.Models.UserDtos;
+using Definition.Share.Models.SystemUserDtos;
 
 namespace Application.Manager;
 /// <summary>
 /// 用户账户
 /// </summary>
-public class UserManager(
-    DataAccessContext<User> dataContext,
-    ILogger<UserManager> logger,
-    IUserContext userContext) : ManagerBase<User, UserUpdateDto, UserFilterDto, UserItemDto>(dataContext, logger)
+public class SystemUserManager(
+    DataAccessContext<SystemUser> dataContext,
+    ILogger<SystemUserManager> logger,
+    IUserContext userContext) : ManagerBase<SystemUser, SystemUserUpdateDto, SystemUserFilterDto, SystemUserItemDto>(dataContext, logger)
 {
     private readonly IUserContext _userContext = userContext;
 
@@ -17,7 +17,7 @@ public class UserManager(
     /// <param name="user"></param>
     /// <param name="newPassword"></param>
     /// <returns></returns>
-    public async Task<bool> ChangePasswordAsync(User user, string newPassword)
+    public async Task<bool> ChangePasswordAsync(SystemUser user, string newPassword)
     {
         user.PasswordSalt = HashCrypto.BuildSalt();
         user.PasswordHash = HashCrypto.GeneratePwd(newPassword, user.PasswordSalt);
@@ -30,9 +30,9 @@ public class UserManager(
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
-    public async Task<User> RegisterAsync(RegisterDto dto)
+    public async Task<SystemUser> RegisterAsync(RegisterDto dto)
     {
-        var user = new User
+        var user = new SystemUser
         {
             UserName = dto.UserName,
             PasswordSalt = HashCrypto.BuildSalt()
@@ -51,9 +51,9 @@ public class UserManager(
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
-    public async Task<User> CreateNewEntityAsync(UserAddDto dto)
+    public async Task<SystemUser> CreateNewEntityAsync(SystemUserAddDto dto)
     {
-        var user = new User
+        var user = new SystemUser
         {
             UserName = dto.UserName,
             PasswordSalt = HashCrypto.BuildSalt()
@@ -67,7 +67,7 @@ public class UserManager(
         return user;
     }
 
-    public override async Task<User> UpdateAsync(User entity, UserUpdateDto dto)
+    public override async Task<SystemUser> UpdateAsync(SystemUser entity, SystemUserUpdateDto dto)
     {
         if (dto.Password != null && _userContext != null && _userContext.IsAdmin)
         {
@@ -77,17 +77,16 @@ public class UserManager(
         return await base.UpdateAsync(entity, dto);
     }
 
-    public override async Task<PageList<UserItemDto>> FilterAsync(UserFilterDto filter)
+    public override async Task<PageList<SystemUserItemDto>> FilterAsync(SystemUserFilterDto filter)
     {
         Queryable = Queryable
             .WhereNotNull(filter.UserName, q => q.UserName == filter.UserName)
-            .WhereNotNull(filter.UserType, q => q.UserType == filter.UserType)
             .WhereNotNull(filter.Email, q => q.Email == filter.Email)
             .WhereNotNull(filter.PhoneNumber, q => q.PhoneNumber == filter.PhoneNumber)
             .WhereNotNull(filter.EmailConfirmed, q => q.EmailConfirmed == filter.EmailConfirmed)
             .WhereNotNull(filter.PhoneNumberConfirmed, q => q.PhoneNumberConfirmed == filter.PhoneNumberConfirmed);
 
-        return await Query.FilterAsync<UserItemDto>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);
+        return await Query.FilterAsync<SystemUserItemDto>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);
     }
 
     /// <summary>
@@ -95,9 +94,9 @@ public class UserManager(
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<User?> GetOwnedAsync(Guid id)
+    public async Task<SystemUser?> GetOwnedAsync(Guid id)
     {
-        IQueryable<User> query = Command.Db.Where(q => q.Id == id);
+        IQueryable<SystemUser> query = Command.Db.Where(q => q.Id == id);
         // 获取用户所属的对象
         return await query.FirstOrDefaultAsync();
     }

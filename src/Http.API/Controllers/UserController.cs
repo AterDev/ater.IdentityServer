@@ -1,17 +1,17 @@
-using Definition.Share.Models.UserDtos;
+using Definition.Share.Models.SystemUserDtos;
 
 namespace Http.API.Controllers;
 
 /// <summary>
 /// 用户账户
 /// </summary>
-/// <see cref="Application.Manager.UserManager"/>
+/// <see cref="Application.Manager.SystemUserManager"/>
 public class UserController(
     IUserContext user,
     ILogger<UserController> logger,
-    UserManager manager,
+    SystemUserManager manager,
     CacheService cache,
-    IConfiguration config) : ClientControllerBase<UserManager>(manager, user, logger)
+    IConfiguration config) : ClientControllerBase<SystemUserManager>(manager, user, logger)
 {
     private readonly CacheService _cache = cache;
     private readonly IConfiguration _config = config;
@@ -23,7 +23,7 @@ public class UserController(
     /// <returns></returns>
     [HttpPost]
     [AllowAnonymous]
-    public async Task<ActionResult<User>> RegisterAsync(RegisterDto dto)
+    public async Task<ActionResult<SystemUser>> RegisterAsync(RegisterDto dto)
     {
         // 判断重复用户名
         if (manager.Query.Db.Any(q => q.UserName.Equals(dto.UserName)))
@@ -61,7 +61,7 @@ public class UserController(
     public async Task<ActionResult<LoginResult>> LoginAsync(LoginDto dto)
     {
         // 查询用户
-        User? user = await manager.Query.Db.Where(u => u.UserName.Equals(dto.UserName))
+        SystemUser? user = await manager.Query.Db.Where(u => u.UserName.Equals(dto.UserName))
             .FirstOrDefaultAsync();
         if (user == null)
         {
@@ -159,7 +159,7 @@ public class UserController(
         {
             return NotFound("");
         }
-        User? user = await manager.GetCurrentAsync(_user.UserId);
+        SystemUser? user = await manager.GetCurrentAsync(_user.UserId);
         return !HashCrypto.Validate(password, user!.PasswordSalt, user.PasswordHash)
             ? (ActionResult<bool>)Problem("当前密码不正确")
             : await manager.ChangePasswordAsync(user, newPassword);
@@ -171,9 +171,9 @@ public class UserController(
     /// <param name="dto"></param>
     /// <returns></returns>
     [HttpPut]
-    public async Task<ActionResult<User?>> UpdateAsync(UserUpdateDto dto)
+    public async Task<ActionResult<SystemUser?>> UpdateAsync(SystemUserUpdateDto dto)
     {
-        User? current = await manager.GetCurrentAsync(_user.UserId);
+        SystemUser? current = await manager.GetCurrentAsync(_user.UserId);
         if (current == null)
         {
             return NotFound(ErrorMsg.NotFoundResource);
@@ -186,9 +186,9 @@ public class UserController(
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public async Task<ActionResult<User?>> GetDetailAsync()
+    public async Task<ActionResult<SystemUser?>> GetDetailAsync()
     {
-        User? res = await manager.FindAsync(_user.UserId);
+        SystemUser? res = await manager.FindAsync(_user.UserId);
         return (res == null) ? NotFound(ErrorMsg.NotFoundResource) : res;
     }
 }

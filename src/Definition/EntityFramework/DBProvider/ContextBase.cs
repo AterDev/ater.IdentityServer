@@ -6,7 +6,7 @@ namespace Definition.EntityFramework.DBProvider;
 
 public partial class ContextBase(DbContextOptions options) : DbContext(options)
 {
-    public DbSet<User> Users { get; set; }
+    public DbSet<SystemUser> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

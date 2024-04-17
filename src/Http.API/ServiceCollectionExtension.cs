@@ -1,5 +1,6 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Unicode;
+using Definition.EntityFramework.DBProvider;
 using Http.API;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,6 +26,8 @@ public static class ServiceCollectionExtension
         builder.Services.AddManager();
 
         builder.Services.AddSingleton(typeof(CacheService));
+
+        builder.Services.AddOpenIdDict(builder.Configuration);
         builder.Services.AddControllers()
             .ConfigureApiBehaviorOptions(o =>
             {
@@ -80,6 +83,37 @@ public static class ServiceCollectionExtension
         services.AddJwtAuthentication(configuration);
         services.AddAuthorize();
         services.AddCors();
+        return services;
+    }
+
+    public static IServiceCollection AddOpenIdDict(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddOpenIddict()
+            .AddCore(options =>
+            {
+                options.UseEntityFrameworkCore().UseDbContext<CommandDbContext>();
+            })
+            .AddServer(options =>
+            {
+                options.SetAuthorizationEndpointUris("/connect/authorize")
+                    .SetTokenEndpointUris("/connect/token")
+                    .AllowAuthorizationCodeFlow()
+                    .AllowRefreshTokenFlow()
+                    .AllowPasswordFlow()
+                    .AllowClientCredentialsFlow()
+                    .AllowImplicitFlow()
+                    .DisableAccessTokenEncryption()
+                    .AddEphemeralSigningKey()
+                    .AddDevelopmentEncryptionCertificate()
+                    .AddDevelopmentSigningCertificate();
+
+                options.UseAspNetCore()
+                    .EnableTokenEndpointPassthrough()
+                    .EnableAuthorizationEndpointPassthrough()
+                    .EnableLogoutEndpointPassthrough()
+                    .EnableUserinfoEndpointPassthrough();
+            });
+
         return services;
     }
 
@@ -155,7 +189,7 @@ public static class ServiceCollectionExtension
             });
             c.SwaggerDoc("client", new OpenApiInfo
             {
-                Title = "aaa client",
+                Title = "Ids client",
                 Description = "Client API 文档. 更新时间:" + DateTime.Now.ToString("yyyy-MM-dd H:mm:ss"),
                 Version = "v1"
             });

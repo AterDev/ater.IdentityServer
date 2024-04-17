@@ -1,4 +1,4 @@
-﻿namespace Definition.Share.Models.UserDtos;
+﻿namespace Definition.Share.Models.SystemUserDtos;
 public class LoginResult
 {
     public Guid Id { get; set; }

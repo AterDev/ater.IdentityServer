@@ -9,21 +9,13 @@ namespace Definition.Entity;
 [Index(nameof(PhoneNumber), IsUnique = true)]
 [Index(nameof(CreatedTime))]
 [Index(nameof(IsDeleted))]
-public class User : IEntityBase
+public class SystemUser : IEntityBase
 {
-    // TODO:根据实际需求调整字段
-
     /// <summary>
     /// 用户名
     /// </summary>
     [Length(2, 40)]
     public required string UserName { get; set; }
-
-    /// <summary>
-    /// 用户类型
-    /// </summary>
-    public UserType UserType { get; set; } = UserType.Normal;
-
     /// <summary>
     /// 邮箱
     /// </summary>
@@ -65,19 +57,4 @@ public class User : IEntityBase
     #region 用户关联内容
 
     #endregion
-}
-public enum UserType
-{
-    /// <summary>
-    /// 普通用户
-    /// </summary>
-    Normal,
-    /// <summary>
-    /// 认证用户
-    /// </summary>
-    Verify,
-    /// <summary>
-    /// 会员
-    /// </summary>
-    Member
 }

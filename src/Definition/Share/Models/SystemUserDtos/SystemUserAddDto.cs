@@ -1,22 +1,18 @@
 using Definition.Entity;
 
-namespace Definition.Share.Models.UserDtos;
+namespace Definition.Share.Models.SystemUserDtos;
 /// <summary>
 /// 用户账户添加时请求结构
 /// </summary>
-/// <inheritdoc cref="User"/>
-public class UserAddDto
+/// <inheritdoc cref="SystemUser"/>
+public class SystemUserAddDto
 {
     /// <summary>
     /// 用户名
     /// </summary>
     [MaxLength(40)]
     public required string UserName { get; set; }
-    /// <summary>
-    /// 用户类型
-    /// </summary>
-    public UserType UserType { get; set; } = UserType.Normal;
-    public string Password { get; set; } = "123456";
+    public required string Password { get; set; }
     /// <summary>
     /// 邮箱
     /// </summary>

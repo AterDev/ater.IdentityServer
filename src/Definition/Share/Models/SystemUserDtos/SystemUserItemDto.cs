@@ -1,21 +1,17 @@
 using Definition.Entity;
 
-namespace Definition.Share.Models.UserDtos;
+namespace Definition.Share.Models.SystemUserDtos;
 /// <summary>
 /// 用户账户列表元素
 /// </summary>
-/// <inheritdoc cref="User"/>
-public class UserItemDto
+/// <inheritdoc cref="SystemUser"/>
+public class SystemUserItemDto
 {
     /// <summary>
     /// 用户名
     /// </summary>
     [MaxLength(40)]
     public string UserName { get; set; } = default!;
-    /// <summary>
-    /// 用户类型
-    /// </summary>
-    public UserType UserType { get; set; } = UserType.Normal;
     /// <summary>
     /// 邮箱
     /// </summary>

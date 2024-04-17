@@ -1,4 +1,5 @@
 using Http.API;
+using Http.API.Worker;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,12 @@ WebApplication app = builder.Build();
 
 // 使用中间件
 app.UseDefaultWebServices();
-app.Run();
+
+using (app)
+{
+    await InitDataWorker.InitAsync(app.Services);
+    GC.Collect();
+    app.Run();
+}
 
 public partial class Program { }

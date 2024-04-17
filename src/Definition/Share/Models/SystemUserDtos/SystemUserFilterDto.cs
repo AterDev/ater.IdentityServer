@@ -1,21 +1,17 @@
 using Definition.Entity;
 
-namespace Definition.Share.Models.UserDtos;
+namespace Definition.Share.Models.SystemUserDtos;
 /// <summary>
 /// 用户账户查询筛选
 /// </summary>
-/// <inheritdoc cref="User"/>
-public class UserFilterDto : FilterBase
+/// <inheritdoc cref="SystemUser"/>
+public class SystemUserFilterDto : FilterBase
 {
     /// <summary>
     /// 用户名
     /// </summary>
     [MaxLength(40)]
     public string? UserName { get; set; }
-    /// <summary>
-    /// 用户类型
-    /// </summary>
-    public UserType? UserType { get; set; }
     /// <summary>
     /// 邮箱
     /// </summary>

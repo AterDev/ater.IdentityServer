@@ -81,7 +81,7 @@ public class UserContext : IUserContext
             : _httpContextAccessor.HttpContext!.Connection.RemoteIpAddress?.ToString();
     }
 
-    public async Task<User?> GetUserAsync()
+    public async Task<SystemUser?> GetUserAsync()
     {
         return await _context.Users.FindAsync(UserId);
     }

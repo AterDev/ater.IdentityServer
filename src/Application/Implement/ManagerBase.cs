@@ -84,7 +84,7 @@ public partial class ManagerBase<TEntity, TUpdate, TFilter, TItem>
 
         if (AutoLogType is LogActionType.Add or LogActionType.All or LogActionType.AddOrUpdate)
         {
-            await SaveToLogAsync(entity, UserActionType.Add);
+            SaveToLog(entity, UserActionType.Add);
         }
         return res;
     }
@@ -97,7 +97,7 @@ public partial class ManagerBase<TEntity, TUpdate, TFilter, TItem>
         await AutoSaveAsync();
         if (AutoLogType is LogActionType.Update or LogActionType.All or LogActionType.AddOrUpdate)
         {
-            await SaveToLogAsync(entity, UserActionType.Update);
+            SaveToLog(entity, UserActionType.Update);
         }
         return res;
     }
@@ -110,7 +110,7 @@ public partial class ManagerBase<TEntity, TUpdate, TFilter, TItem>
 
         if (AutoLogType is LogActionType.Delete or LogActionType.All)
         {
-            await SaveToLogAsync(entity, UserActionType.Delete);
+            SaveToLog(entity, UserActionType.Delete);
         }
         return res;
     }
@@ -179,31 +179,12 @@ public partial class ManagerBase<TEntity, TUpdate, TFilter, TItem>
     /// <param name="entity"></param>
     /// <param name="actionType"></param>
     /// <returns></returns>
-    private async Task SaveToLogAsync(TEntity entity, UserActionType actionType)
+    private void SaveToLog(TEntity entity, UserActionType actionType)
     {
         if (UserContext == null)
         {
             _logger.LogWarning("UserContext is null, can't save log");
             return;
-        }
-
-        var route = UserContext.GetHttpContext()?.Request.Path.Value;
-        var description = string.Empty;
-        var targetName = entity.GetType().Name;
-
-        if (UserContext.IsAdmin)
-        {
-            // 管理员日志
-        }
-        else
-        {
-            // 用户日志
-            var log = UserLogs.NewLog(UserContext.Username ?? "", UserContext.UserId, targetName, actionType, route, description);
-            var taskQueue = WebAppContext.GetScopeService<EntityTaskQueue<UserLogs>>();
-            if (taskQueue != null)
-            {
-                await taskQueue.AddItemAsync(log);
-            }
         }
     }
 }

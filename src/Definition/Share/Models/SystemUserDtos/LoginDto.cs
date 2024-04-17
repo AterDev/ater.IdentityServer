@@ -1,4 +1,4 @@
-﻿namespace Definition.Share.Models.UserDtos;
+﻿namespace Definition.Share.Models.SystemUserDtos;
 
 /// <summary>
 /// 登录

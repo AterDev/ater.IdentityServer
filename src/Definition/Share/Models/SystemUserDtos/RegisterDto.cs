@@ -1,9 +1,9 @@
-﻿namespace Definition.Share.Models.UserDtos;
+﻿namespace Definition.Share.Models.SystemUserDtos;
 
 /// <summary>
 /// 用户注册
 /// </summary>
-/// <inheritdoc cref="Entity.User"/>
+/// <inheritdoc cref="Entity.SystemUser"/>
 public class RegisterDto
 {
     /// <summary>
