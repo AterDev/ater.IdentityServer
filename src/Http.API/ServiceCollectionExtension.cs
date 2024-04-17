@@ -60,6 +60,7 @@ public static class ServiceCollectionExtension
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/client/swagger.json", name: "client");
+                c.SwaggerEndpoint("/swagger/admin/swagger.json", name: "admin");
             });
         }
 
@@ -91,7 +92,9 @@ public static class ServiceCollectionExtension
         services.AddOpenIddict()
             .AddCore(options =>
             {
-                options.UseEntityFrameworkCore().UseDbContext<CommandDbContext>();
+                options.UseEntityFrameworkCore()
+                    .UseDbContext<CommandDbContext>()
+                    .ReplaceDefaultEntities<Guid>();
             })
             .AddServer(options =>
             {
@@ -191,6 +194,12 @@ public static class ServiceCollectionExtension
             {
                 Title = "Ids client",
                 Description = "Client API 文档. 更新时间:" + DateTime.Now.ToString("yyyy-MM-dd H:mm:ss"),
+                Version = "v1"
+            });
+            c.SwaggerDoc("admin", new OpenApiInfo
+            {
+                Title = "Ids Admin",
+                Description = "System Manager Doc . 更新时间:" + DateTime.Now.ToString("yyyy-MM-dd H:mm:ss"),
                 Version = "v1"
             });
             var xmlFiles = Directory.GetFiles(AppContext.BaseDirectory, "*.xml", SearchOption.TopDirectoryOnly);

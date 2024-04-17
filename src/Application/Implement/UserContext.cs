@@ -65,7 +65,7 @@ public class UserContext : IUserContext
     /// <returns></returns>
     public async Task<bool> ExistAsync()
     {
-        return await _context.Users.AnyAsync(u => u.Id == UserId);
+        return await _context.SystemUsers.AnyAsync(u => u.Id == UserId);
     }
 
     /// <summary>
@@ -83,7 +83,7 @@ public class UserContext : IUserContext
 
     public async Task<SystemUser?> GetUserAsync()
     {
-        return await _context.Users.FindAsync(UserId);
+        return await _context.SystemUsers.FindAsync(UserId);
     }
 
     public async Task<TUser?> GetUserAsync<TUser>() where TUser : class

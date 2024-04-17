@@ -12,7 +12,7 @@ public class InitDataWorker
         using var scope = serviceProvider.CreateScope();
 
         var context = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
-        await context.Database.EnsureCreatedAsync();
+        await context.Database.MigrateAsync();
 
         var applicationManager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
         await InitOpenIdApplicationAsync(applicationManager);

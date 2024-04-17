@@ -6,12 +6,12 @@ namespace Http.API.Controllers;
 /// 用户账户
 /// </summary>
 /// <see cref="Application.Manager.SystemUserManager"/>
-public class UserController(
+public class SystemUserController(
     IUserContext user,
-    ILogger<UserController> logger,
+    ILogger<SystemUserController> logger,
     SystemUserManager manager,
     CacheService cache,
-    IConfiguration config) : ClientControllerBase<SystemUserManager>(manager, user, logger)
+    IConfiguration config) : RestControllerBase<SystemUserManager>(manager, user, logger)
 {
     private readonly CacheService _cache = cache;
     private readonly IConfiguration _config = config;

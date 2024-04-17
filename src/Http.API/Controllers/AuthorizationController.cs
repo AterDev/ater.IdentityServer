@@ -14,7 +14,7 @@ public class AuthorizationController : ControllerBase
     public AuthorizationController(IOpenIddictApplicationManager applicationManager)
         => _applicationManager = applicationManager;
 
-    [HttpPost("~/connect/token"), Produces("application/json")]
+    [HttpPost("~/connect/token")]
     public async Task<IActionResult> Exchange()
     {
         var request = HttpContext.GetOpenIddictServerRequest();

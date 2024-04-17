@@ -15,7 +15,7 @@ namespace Http.API.Migrations
                 name: "OpenIddictApplications",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ApplicationType = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     ClientId = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     ClientSecret = table.Column<string>(type: "text", nullable: true),
@@ -41,7 +41,7 @@ namespace Http.API.Migrations
                 name: "OpenIddictScopes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     ConcurrencyToken = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     Description = table.Column<string>(type: "text", nullable: true),
                     Descriptions = table.Column<string>(type: "text", nullable: true),
@@ -57,7 +57,7 @@ namespace Http.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "SystemUsers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
@@ -81,15 +81,15 @@ namespace Http.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_SystemUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "OpenIddictAuthorizations",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    ApplicationId = table.Column<string>(type: "text", nullable: true),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ApplicationId = table.Column<Guid>(type: "uuid", nullable: true),
                     ConcurrencyToken = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     Properties = table.Column<string>(type: "text", nullable: true),
@@ -112,9 +112,9 @@ namespace Http.API.Migrations
                 name: "OpenIddictTokens",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "text", nullable: false),
-                    ApplicationId = table.Column<string>(type: "text", nullable: true),
-                    AuthorizationId = table.Column<string>(type: "text", nullable: true),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ApplicationId = table.Column<Guid>(type: "uuid", nullable: true),
+                    AuthorizationId = table.Column<Guid>(type: "uuid", nullable: true),
                     ConcurrencyToken = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     CreationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     ExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
@@ -175,30 +175,30 @@ namespace Http.API.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_CreatedTime",
-                table: "Users",
+                name: "IX_SystemUsers_CreatedTime",
+                table: "SystemUsers",
                 column: "CreatedTime");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_Email",
-                table: "Users",
+                name: "IX_SystemUsers_Email",
+                table: "SystemUsers",
                 column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_IsDeleted",
-                table: "Users",
+                name: "IX_SystemUsers_IsDeleted",
+                table: "SystemUsers",
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_PhoneNumber",
-                table: "Users",
+                name: "IX_SystemUsers_PhoneNumber",
+                table: "SystemUsers",
                 column: "PhoneNumber",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_UserName",
-                table: "Users",
+                name: "IX_SystemUsers_UserName",
+                table: "SystemUsers",
                 column: "UserName",
                 unique: true);
         }
@@ -213,7 +213,7 @@ namespace Http.API.Migrations
                 name: "OpenIddictTokens");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "SystemUsers");
 
             migrationBuilder.DropTable(
                 name: "OpenIddictAuthorizations");
