@@ -7,5 +7,6 @@ public static partial class ManagerServiceCollectionExtensions
     {
         services.AddScoped(typeof(DataAccessContext<>));
         services.AddScoped(typeof(SystemUserManager));
+        services.AddScoped(typeof(OpenIdManager));
     }
 }
