@@ -4,21 +4,22 @@ using Definition.Share.Models.ApplicationDtos;
 using OpenIddict.Abstractions;
 
 namespace Http.API.Controllers;
+
 /// <summary>
-/// 应用
+/// Scope
 /// </summary>
 /// <param name="manager"></param>
-/// <param name="applicationManager"></param>
+/// <param name="scopeManager"></param>
 /// <param name="user"></param>
 /// <param name="logger"></param>
 [AllowAnonymous]
-public class ApplicationController(
+public class ScopeController(
     OpenIdManager manager,
-    IOpenIddictApplicationManager applicationManager,
+    IOpenIddictScopeManager scopeManager,
     IUserContext user,
-    ILogger<ApplicationController> logger) : RestControllerBase<OpenIdManager>(manager, user, logger)
+    ILogger<ScopeController> logger) : RestControllerBase<OpenIdManager>(manager, user, logger)
 {
-    private readonly IOpenIddictApplicationManager _manager = applicationManager;
+    private readonly IOpenIddictScopeManager _manager = scopeManager;
 
 
     /// <summary>
@@ -26,7 +27,7 @@ public class ApplicationController(
     /// </summary>
     /// <returns></returns>
     [HttpGet]
-    public ActionResult<List<ApplicationItemDto>> GetOpenIddictApplicationDescriptorList(int pageSize = 12, int pageIndex = 1)
+    public ActionResult<List<ApplicationItemDto>> GetOpenIddictScopeDescriptorList(int pageSize = 12, int pageIndex = 1)
     {
         var offset = (pageIndex - 1) * pageSize;
         var data = _manager.ListAsync(pageSize, offset > 0 ? offset : 0);
@@ -39,7 +40,7 @@ public class ApplicationController(
     /// <param name="entity"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<OpenIddictApplicationDescriptor>> AddOpenIddictApplicationDescriptorAsync(OpenIddictApplicationDescriptor entity)
+    public async Task<ActionResult<OpenIddictScopeDescriptor>> AddOpenIddictScopeDescriptorAsync(OpenIddictScopeDescriptor entity)
     {
         await _manager.CreateAsync(entity);
         return entity;
@@ -51,7 +52,7 @@ public class ApplicationController(
     /// <param name="entity"></param>
     /// <returns></returns>
     [HttpPut]
-    public async Task<ActionResult<OpenIddictApplicationDescriptor>> UpdateOpenIddictApplicationDescriptorAsync(OpenIddictApplicationDescriptor entity)
+    public async Task<ActionResult<OpenIddictScopeDescriptor>> UpdateOpenIddictScopeDescriptorAsync(OpenIddictScopeDescriptor entity)
     {
         await _manager.UpdateAsync(entity);
         return entity;
@@ -63,7 +64,7 @@ public class ApplicationController(
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<ApplicationItemDto?>> GetOpenIddictApplicationDescriptorAsync(Guid id)
+    public async Task<ActionResult<ApplicationItemDto?>> GetOpenIddictScopeDescriptorAsync(Guid id)
     {
         var data = await _manager.FindByIdAsync(id.ToString());
         if (data == null)
@@ -79,7 +80,7 @@ public class ApplicationController(
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<ActionResult<OpenIddictApplicationDescriptor>> DeleteOpenIddictApplicationDescriptorAsync(Guid id)
+    public async Task<ActionResult<OpenIddictScopeDescriptor>> DeleteOpenIddictScopeDescriptorAsync(Guid id)
     {
         var data = await _manager.FindByIdAsync(id.ToString());
 
