@@ -1,6 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-
-namespace Definition.Entity.OpenId;
+﻿namespace Definition.Entity.OpenId;
 
 /// <summary>
 /// Application
@@ -57,9 +55,6 @@ public class Application : IEntityBase
     /// The properties of application.
     /// </summary>
     public ICollection<AdditionProperty> Properties { get; set; } = [];
-
-    [NotMapped]
-    public JsonWebKeySet? JsonWebKeySet { get; set; }
 
     /// <summary>
     /// Gets the redirect URIs associated with the application.

@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-
-namespace Definition.Entity.OpenId;
+﻿namespace Definition.Entity.OpenId;
 
 /// <summary>
 /// Token
@@ -27,13 +25,6 @@ public class Token : IEntityBase
     /// </summary>
     [MaxLength(1000)]
     public string? Payload { get; set; }
-
-    /// <summary>
-    /// Gets or sets the optional principal associated with the token.
-    /// Note: this property is not stored by the default token stores.
-    /// </summary>
-    [NotMapped]
-    public ClaimsPrincipal? Principal { get; set; }
 
     public ICollection<AdditionProperty> Properties { get; set; } = [];
 

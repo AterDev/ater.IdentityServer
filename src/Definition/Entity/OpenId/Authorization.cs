@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-
-namespace Definition.Entity.OpenId;
+﻿namespace Definition.Entity.OpenId;
 
 /// <summary>
 /// Authorizatio
@@ -11,9 +9,6 @@ public class Authorization : IEntityBase
     public Guid ApplicationId { get; set; } = default!;
     [ForeignKey(nameof(ApplicationId))]
     public Application Application { get; set; } = null!;
-
-    [NotMapped]
-    public ClaimsPrincipal? Principal { get; set; }
 
     /// <summary>
     /// Gets the additional properties associated with the authorization.

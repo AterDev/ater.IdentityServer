@@ -1,41 +1,69 @@
+@import './assets/bootstrap-grid.min.css';
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
-// Plus imports for other components in your app.
+html,
+body {
+    height: 100%;
+    font-family: sans-serif, "微软雅黑", Tahoma, Geneva, Verdana;
+}
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat.core();
+body {
+    margin: 0;
+}
 
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$WebApp-primary: mat.define-palette(mat.$indigo-palette);
-$WebApp-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+img {
+    object-fit: cover;
+}
 
-// The warn palette is optional (defaults to red).
-$WebApp-warn: mat.define-palette(mat.$red-palette);
+.loading {
+    margin: 0 auto;
+}
 
-// Create the theme object. A theme consists of configurations for individual
-// theming systems such as "color" or "typography".
-$WebApp-theme: mat.define-light-theme((
-  color: (
-    primary: $WebApp-primary,
-    accent: $WebApp-accent,
-    warn: $WebApp-warn,
-  ),
-  typography: mat.define-typography-config(),
-  density: 0
-));
+.avatar {
+    border-radius: 50%;
+}
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include mat.all-component-themes($WebApp-theme);
+.w-100 {
+    width: 100%;
+}
 
-/* You can add global styles to this file, and also import other style files */
+.clickable {
+    cursor: pointer;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.ck-editor__editable_inline {
+    min-height: 500px;
+}
+
+.mat-mdc-list-item .mat-icon {
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.gap-1 {
+  gap: 8px;
+}
+
+.gap-2 {
+  gap: 16px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.icon {
+  width: 38px;
+  height: 38px;
+  font-size: 20px;
+  line-height: 38px;
+  border-radius: 10px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: #2359be;
+  color: white;
+}
+
+
+.v-middle {
+  vertical-align: middle;
+}
