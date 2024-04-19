@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -8,10 +8,10 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class BaseService {
+  public baseUrl: string | null;
   public isMobile = false;
-  public baseUrl: string;
   constructor(
-    private http: HttpClient,
+    protected http: HttpClient,
     @Inject('BASE_URL') baseUrl: string
     // private oidcSecurityService: OidcSecurityService
   ) {
@@ -49,6 +49,7 @@ export class BaseService {
     link.click();
     URL.revokeObjectURL(link.href);
   }
+
   getHeaders(): HttpHeaders {
     return new HttpHeaders({
       Accept: 'application/json',

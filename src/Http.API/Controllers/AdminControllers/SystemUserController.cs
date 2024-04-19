@@ -1,11 +1,11 @@
 using Definition.Share.Models.SystemUserDtos;
 
-namespace Http.API.Controllers;
+namespace Http.API.Controllers.AdminControllers;
 
 /// <summary>
 /// 用户账户
 /// </summary>
-/// <see cref="Application.Manager.SystemUserManager"/>
+/// <see cref="SystemUserManager"/>
 public class SystemUserController(
     IUserContext user,
     ILogger<SystemUserController> logger,
@@ -97,18 +97,13 @@ public class SystemUserController(
                 !string.IsNullOrWhiteSpace(audience))
             {
                 // 设置角色或用户等级以区分权限
-                var roles = new List<string> { AppConst.User };
+                var roles = new List<string> { AppConst.AdminUser };
                 // 过期时间:minutes
                 var expired = 60 * 24;
                 JwtService jwt = new(sign, audience, issuer)
                 {
                     TokenExpires = expired,
                 };
-                // 添加管理员用户标识
-                if (!roles.Contains(AppConst.User))
-                {
-                    roles.Add(AppConst.User);
-                }
                 var token = jwt.GetToken(user.Id.ToString(), [.. roles]);
                 // 缓存登录状态
                 await _cache.SetValueAsync(AppConst.LoginCachePrefix + user.Id.ToString(), true, expired * 60);
@@ -189,6 +184,6 @@ public class SystemUserController(
     public async Task<ActionResult<SystemUser?>> GetDetailAsync()
     {
         SystemUser? res = await manager.FindAsync(_user.UserId);
-        return (res == null) ? NotFound(ErrorMsg.NotFoundResource) : res;
+        return res == null ? NotFound(ErrorMsg.NotFoundResource) : res;
     }
 }

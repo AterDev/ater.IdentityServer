@@ -1,25 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 // import { OAuthService, OAuthErrorEvent, UserInfo } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoginService } from '../../auth/login.service';
-import { AuthService } from '../../share/services/auth.service';
-import { CommonModule } from '@angular/common';
+import { SystemUserService } from 'src/app/share/admin/services/system-user.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
+import { FormModule, ShareModule } from 'src/app/share/share.module';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [CommonModule, MatCardModule, MatFormFieldModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  standalone: true,
+  imports: [FormModule, MatCardModule],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;
   constructor(
     private loginService: LoginService,
-    private authService: AuthService,
+    private service: SystemUserService,
     private router: Router
 
   ) {
@@ -27,26 +29,6 @@ export class LoginComponent implements OnInit {
   get username() { return this.loginForm.get('username'); }
   get password() { return this.loginForm.get('password'); }
   ngOnInit(): void {
-    // const token = this.oauthService.getAccessToken();
-    // const cliams = this.oauthService.getIdentityClaims();
-    // if (token && cliams) {
-    //   this.router.navigateByUrl('/index');
-    // }
-
-    // this.oauthService.events.subscribe(event => {
-    //   if (event instanceof OAuthErrorEvent) {
-    //     // TODO:处理错误
-    //     console.error(event);
-    //   } else {
-    //     if (event.type === 'token_received' || event.type === 'token_refreshed') {
-    //       this.oauthService.loadUserProfile()
-    //         .then(() => {
-    //           this.router.navigateByUrl('/index');
-    //         });
-    //     }
-    //   }
-    // });
-
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.minLength(3)]),
       password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(50)])
@@ -76,10 +58,10 @@ export class LoginComponent implements OnInit {
 
     let data = this.loginForm.value;
     // 登录接口
-    this.authService.login(data)
+    this.service.login(data)
       .subscribe(res => {
         this.loginService.saveLoginState(res);
-        this.router.navigate(['/']);
+        this.router.navigate(['/admin']);
       });
   }
 

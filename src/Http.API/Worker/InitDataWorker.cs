@@ -25,7 +25,7 @@ public class InitDataWorker
     private static async Task InitSystemUserAsync(SystemUserManager manager)
     {
         var exist = await manager.FindAsync<SystemUser>(u => u.UserName == "admin");
-        if (exist != null)
+        if (exist == null)
         {
             var user = new SystemUserAddDto
             {

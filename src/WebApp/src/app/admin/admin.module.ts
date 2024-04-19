@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { AdminRoutingModule } from './admin-routing.module';
 import { ShareModule } from '../share/share.module';
-import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [],
   imports: [
     CommonModule,
     ShareModule,
