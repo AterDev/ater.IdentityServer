@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 // import { OAuthService, OAuthErrorEvent, UserInfo } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../../auth/login.service';
 import { SystemUserService } from 'src/app/share/admin/services/system-user.service';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { CommonModule } from '@angular/common';
-import { FormModule, ShareModule } from 'src/app/share/share.module';
-import { MatInputModule } from '@angular/material/input';
+import { FormModule } from 'src/app/share/share.module';
 
 @Component({
   selector: 'app-login',
@@ -56,7 +53,7 @@ export class LoginComponent implements OnInit {
   }
   doLogin(): void {
 
-    let data = this.loginForm.value;
+    const data = this.loginForm.value;
     // 登录接口
     this.service.login(data)
       .subscribe(res => {
