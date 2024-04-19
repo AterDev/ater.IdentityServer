@@ -1,15 +1,20 @@
 using Definition.Entity.OpenId;
 namespace Definition.Share.Models.ApplicationDtos;
 /// <summary>
-/// Application列表元素
+/// Application查询筛选
 /// </summary>
 /// <see cref="Definition.Entity.OpenId.Application"/>
-public class ApplicationItemDto
+public class ApplicationFilterDto : FilterBase
 {
     /// <summary>
     /// Web/App/Client
     /// </summary>
-    public ApplicationType ApplicationType { get; set; } = ApplicationType.Web;
+    public ApplicationType? ApplicationType { get; set; }
+    /// <summary>
+    /// ClientId
+    /// </summary>
+    [MaxLength(100)]
+    public string? ClientId { get; set; }
     /// <summary>
     /// Secret
     /// </summary>
@@ -18,7 +23,7 @@ public class ApplicationItemDto
     /// <summary>
     /// Confidential as default
     /// </summary>
-    public ClientType ClientType { get; set; } = ClientType.Confidential;
+    public ClientType? ClientType { get; set; }
     /// <summary>
     /// 同意书类型
     /// </summary>
@@ -27,12 +32,6 @@ public class ApplicationItemDto
     /// 名称
     /// </summary>
     [MaxLength(100)]
-    public string DisplayName { get; set; } = default!;
-    /// <summary>
-    /// The settings of  application.
-    /// </summary>
-    public Dictionary<string, string>? Settings { get; set; }
-    public Guid Id { get; set; }
-    public DateTimeOffset CreatedTime { get; set; }
+    public string? DisplayName { get; set; }
     
 }

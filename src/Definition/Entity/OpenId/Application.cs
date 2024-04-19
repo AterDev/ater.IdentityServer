@@ -1,6 +1,6 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 
-namespace Definition.Entity;
+namespace Definition.Entity.OpenId;
 
 /// <summary>
 /// Application

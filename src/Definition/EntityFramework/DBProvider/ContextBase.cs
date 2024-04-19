@@ -1,4 +1,5 @@
 using Definition.Entity;
+using Definition.Entity.OpenId;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 

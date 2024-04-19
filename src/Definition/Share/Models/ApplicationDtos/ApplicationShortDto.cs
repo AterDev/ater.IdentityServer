@@ -1,20 +1,15 @@
 using Definition.Entity.OpenId;
 namespace Definition.Share.Models.ApplicationDtos;
 /// <summary>
-/// Application添加时请求结构
+/// Application概要
 /// </summary>
 /// <see cref="Definition.Entity.OpenId.Application"/>
-public class ApplicationAddDto
+public class ApplicationShortDto
 {
     /// <summary>
     /// Web/App/Client
     /// </summary>
     public ApplicationType ApplicationType { get; set; } = ApplicationType.Web;
-    /// <summary>
-    /// ClientId
-    /// </summary>
-    [MaxLength(100)]
-    public required string ClientId { get; set; }
     /// <summary>
     /// Secret
     /// </summary>
@@ -32,7 +27,7 @@ public class ApplicationAddDto
     /// 名称
     /// </summary>
     [MaxLength(100)]
-    public required string DisplayName { get; set; }
+    public string DisplayName { get; set; } = default!;
     /// <summary>
     /// The permissions of application.
     /// </summary>

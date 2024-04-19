@@ -1,20 +1,20 @@
 using Definition.Entity.OpenId;
 namespace Definition.Share.Models.ApplicationDtos;
 /// <summary>
-/// Application添加时请求结构
+/// Application更新时请求结构
 /// </summary>
 /// <see cref="Definition.Entity.OpenId.Application"/>
-public class ApplicationAddDto
+public class ApplicationUpdateDto
 {
     /// <summary>
     /// Web/App/Client
     /// </summary>
-    public ApplicationType ApplicationType { get; set; } = ApplicationType.Web;
+    public ApplicationType? ApplicationType { get; set; }
     /// <summary>
     /// ClientId
     /// </summary>
     [MaxLength(100)]
-    public required string ClientId { get; set; }
+    public string? ClientId { get; set; }
     /// <summary>
     /// Secret
     /// </summary>
@@ -23,7 +23,7 @@ public class ApplicationAddDto
     /// <summary>
     /// Confidential as default
     /// </summary>
-    public ClientType ClientType { get; set; } = ClientType.Confidential;
+    public ClientType? ClientType { get; set; }
     /// <summary>
     /// 同意书类型
     /// </summary>
@@ -32,30 +32,32 @@ public class ApplicationAddDto
     /// 名称
     /// </summary>
     [MaxLength(100)]
-    public required string DisplayName { get; set; }
+    public string? DisplayName { get; set; }
     /// <summary>
     /// The permissions of application.
     /// </summary>
-    public ICollection<string> Permissions { get; set; } = [];
+    public ICollection<string>? Permissions { get; set; }
     /// <summary>
     /// The post-logout redirect URIs of  application.
     /// </summary>
-    public ICollection<string> PostLogoutRedirectUris { get; set; } = [];
+    public ICollection<string>? PostLogoutRedirectUris { get; set; }
     /// <summary>
     /// The properties of application.
     /// </summary>
-    public ICollection<AdditionProperty> Properties { get; set; } = [];
+    public ICollection<AdditionProperty>? Properties { get; set; }
     /// <summary>
     /// Gets the redirect URIs associated with the application.
     /// </summary>
-    public ICollection<string> RedirectUris { get; set; } = [];
+    public ICollection<string>? RedirectUris { get; set; }
     /// <summary>
     /// The requirements of application.
     /// </summary>
-    public ICollection<string> Requirements { get; set; } = [];
+    public ICollection<string>? Requirements { get; set; }
     /// <summary>
     /// The settings of  application.
     /// </summary>
     public Dictionary<string, string>? Settings { get; set; }
+    public List<Guid>? AuthorizationIds { get; set; }
+    public List<Guid>? TokenIds { get; set; }
     
 }

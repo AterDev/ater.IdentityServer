@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 
-namespace Definition.Entity;
+namespace Definition.Entity.OpenId;
 
 /// <summary>
 /// Token

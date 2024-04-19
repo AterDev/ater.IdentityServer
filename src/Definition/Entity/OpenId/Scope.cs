@@ -1,4 +1,4 @@
-﻿namespace Definition.Entity;
+﻿namespace Definition.Entity.OpenId;
 
 /// <summary>
 /// Scope

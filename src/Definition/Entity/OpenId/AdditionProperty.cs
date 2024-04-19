@@ -1,6 +1,6 @@
-﻿namespace Definition.Entity;
+﻿namespace Definition.Entity.OpenId;
 /// <summary>
-/// 属性
+/// 更多属性
 /// </summary>
 public record AdditionProperty
 {

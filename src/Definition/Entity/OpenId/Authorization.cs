@@ -1,9 +1,9 @@
 ﻿using System.Security.Claims;
 
-namespace Definition.Entity;
+namespace Definition.Entity.OpenId;
 
 /// <summary>
-/// authorization
+/// Authorizatio
 /// </summary>
 [Index(nameof(Status))]
 public class Authorization : IEntityBase

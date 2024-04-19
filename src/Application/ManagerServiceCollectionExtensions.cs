@@ -6,6 +6,9 @@ public static partial class ManagerServiceCollectionExtensions
     public static void AddManager(this IServiceCollection services)
     {
         services.AddScoped(typeof(DataAccessContext<>));
+        services.AddScoped(typeof(ApplicationManager));
+        services.AddScoped(typeof(ScopeManager));
         services.AddScoped(typeof(SystemUserManager));
+
     }
 }

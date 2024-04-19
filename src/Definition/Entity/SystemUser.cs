@@ -2,7 +2,7 @@
 
 namespace Definition.Entity;
 /// <summary>
-/// 用户账户
+/// SystemUser
 /// </summary>
 [Index(nameof(UserName), IsUnique = true)]
 [Index(nameof(Email), IsUnique = true)]
