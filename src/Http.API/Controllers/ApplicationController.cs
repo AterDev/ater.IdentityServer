@@ -1,7 +1,4 @@
-﻿
-using Definition.Share.Models.ApplicationDtos;
-
-using OpenIddict.Abstractions;
+﻿using Definition.Share.Models.ApplicationDtos;
 
 namespace Http.API.Controllers;
 /// <summary>
@@ -39,7 +36,7 @@ public class ApplicationController(
     /// <param name="entity"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<OpenIddictApplicationDescriptor>> AddOpenIddictApplicationDescriptorAsync(OpenIddictApplicationDescriptor entity)
+    public async Task<ActionResult<Definition.Entity.Application>> AddOpenIddictApplicationDescriptorAsync(Definition.Entity.Application entity)
     {
         await _manager.CreateAsync(entity);
         return entity;
@@ -51,7 +48,7 @@ public class ApplicationController(
     /// <param name="entity"></param>
     /// <returns></returns>
     [HttpPut]
-    public async Task<ActionResult<OpenIddictApplicationDescriptor>> UpdateOpenIddictApplicationDescriptorAsync(OpenIddictApplicationDescriptor entity)
+    public async Task<ActionResult<Definition.Entity.Application>> UpdateOpenIddictApplicationDescriptorAsync(Definition.Entity.Application entity)
     {
         await _manager.UpdateAsync(entity);
         return entity;
@@ -79,7 +76,7 @@ public class ApplicationController(
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<ActionResult<OpenIddictApplicationDescriptor>> DeleteOpenIddictApplicationDescriptorAsync(Guid id)
+    public async Task<ActionResult<Definition.Entity.Application>> DeleteOpenIddictApplicationDescriptorAsync(Guid id)
     {
         var data = await _manager.FindByIdAsync(id.ToString());
 

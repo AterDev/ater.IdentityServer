@@ -1,6 +1,5 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Unicode;
-using Definition.EntityFramework.DBProvider;
 using Http.API;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -89,34 +88,6 @@ public static class ServiceCollectionExtension
 
     public static IServiceCollection AddOpenIdDict(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddOpenIddict()
-            .AddCore(options =>
-            {
-                options.UseEntityFrameworkCore()
-                    .UseDbContext<CommandDbContext>()
-                    .ReplaceDefaultEntities<Guid>();
-            })
-            .AddServer(options =>
-            {
-                options.SetAuthorizationEndpointUris("/connect/authorize")
-                    .SetTokenEndpointUris("/connect/token")
-                    .AllowAuthorizationCodeFlow()
-                    .AllowRefreshTokenFlow()
-                    .AllowPasswordFlow()
-                    .AllowClientCredentialsFlow()
-                    .AllowImplicitFlow()
-                    .DisableAccessTokenEncryption()
-                    .AddEphemeralSigningKey()
-                    .AddDevelopmentEncryptionCertificate()
-                    .AddDevelopmentSigningCertificate();
-
-                options.UseAspNetCore()
-                    .EnableTokenEndpointPassthrough()
-                    .EnableAuthorizationEndpointPassthrough()
-                    .EnableLogoutEndpointPassthrough()
-                    .EnableUserinfoEndpointPassthrough();
-            });
-
         return services;
     }
 

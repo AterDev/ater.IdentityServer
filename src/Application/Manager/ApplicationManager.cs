@@ -15,7 +15,7 @@ public class ApplicationManager(IOpenIddictApplicationManager manager)
     public async Task CreateOrUpdateAsync(ApplicationAddDto dto)
     {
         var application = await manager.FindByClientIdAsync(dto.ClientId);
-        var descriptor = new OpenIddictApplicationDescriptor
+        var descriptor = new OpenIddict.Abstractions.Application
         {
             ClientId = dto.ClientId,
             ClientSecret = dto.ClientSecret,

@@ -1,7 +1,5 @@
 ﻿using Definition.EntityFramework.DBProvider;
 using Definition.Share.Models.SystemUserDtos;
-using OpenIddict.Abstractions;
-using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace Http.API.Worker;
 
@@ -14,29 +12,15 @@ public class InitDataWorker
         var context = scope.ServiceProvider.GetRequiredService<CommandDbContext>();
         await context.Database.MigrateAsync();
 
-        var applicationManager = scope.ServiceProvider.GetRequiredService<IOpenIddictApplicationManager>();
-        await InitOpenIdApplicationAsync(applicationManager);
         var systemUserManager = scope.ServiceProvider.GetRequiredService<SystemUserManager>();
 
         await InitSystemUserAsync(systemUserManager);
     }
 
-    private static async Task InitOpenIdApplicationAsync(IOpenIddictApplicationManager manager)
-    {
-        if (await manager.FindByClientIdAsync("service-worker") is null)
-        {
-            await manager.CreateAsync(new OpenIddictApplicationDescriptor
-            {
-                ClientId = "service-worker",
-                ClientSecret = "388D45FA-B36B-4988-BA59-B187D329C207",
-                Permissions =
-                {
-                    Permissions.Endpoints.Token,
-                    Permissions.GrantTypes.ClientCredentials
-                }
-            });
-        }
-    }
+    //private static async Task InitOpenIdApplicationAsync(IOpenIddictApplicationManager manager)
+    //{
+
+    //}
 
     private static async Task InitSystemUserAsync(SystemUserManager manager)
     {

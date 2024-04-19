@@ -1,7 +1,4 @@
-﻿
-using Definition.Share.Models.ApplicationDtos;
-
-using OpenIddict.Abstractions;
+﻿using Definition.Share.Models.ApplicationDtos;
 
 namespace Http.API.Controllers;
 
@@ -40,7 +37,7 @@ public class ScopeController(
     /// <param name="entity"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<OpenIddictScopeDescriptor>> AddOpenIddictScopeDescriptorAsync(OpenIddictScopeDescriptor entity)
+    public async Task<ActionResult<Scope>> AddOpenIddictScopeDescriptorAsync(Scope entity)
     {
         await _manager.CreateAsync(entity);
         return entity;
@@ -52,7 +49,7 @@ public class ScopeController(
     /// <param name="entity"></param>
     /// <returns></returns>
     [HttpPut]
-    public async Task<ActionResult<OpenIddictScopeDescriptor>> UpdateOpenIddictScopeDescriptorAsync(OpenIddictScopeDescriptor entity)
+    public async Task<ActionResult<Scope>> UpdateOpenIddictScopeDescriptorAsync(Scope entity)
     {
         await _manager.UpdateAsync(entity);
         return entity;
@@ -80,7 +77,7 @@ public class ScopeController(
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id}")]
-    public async Task<ActionResult<OpenIddictScopeDescriptor>> DeleteOpenIddictScopeDescriptorAsync(Guid id)
+    public async Task<ActionResult<Scope>> DeleteOpenIddictScopeDescriptorAsync(Guid id)
     {
         var data = await _manager.FindByIdAsync(id.ToString());
 

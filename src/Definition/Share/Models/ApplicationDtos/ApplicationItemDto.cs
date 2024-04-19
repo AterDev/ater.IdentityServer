@@ -1,10 +1,10 @@
-﻿using OpenIddict.Abstractions;
+﻿using Definition.Entity;
 
 namespace Definition.Share.Models.ApplicationDtos;
 public class ApplicationItemDto
 {
     public object? ApplicationType { get; set; }
-    public List<OpenIddictAuthorizationDescriptor> Authorizations { get; set; } = [];
+    public List<Authorization> Authorizations { get; set; } = [];
     public string? ClientId { get; set; }
     public string? ClientSecret { get; set; }
     public string? ClientType { get; set; }
@@ -20,5 +20,5 @@ public class ApplicationItemDto
     public object? RedirectUris { get; set; }
     public object? Requirements { get; set; }
     public object? Settings { get; set; }
-    public List<OpenIddictTokenDescriptor> Tokens { get; set; } = [];
+    public List<Token> Tokens { get; set; } = [];
 }
