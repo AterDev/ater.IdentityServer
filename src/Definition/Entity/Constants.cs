@@ -1,5 +1,5 @@
 ﻿namespace Definition.Entity;
-public class Constants
+public static class Constants
 {
     public static class Algorithms
     {

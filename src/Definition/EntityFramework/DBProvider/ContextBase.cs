@@ -7,8 +7,30 @@ namespace Definition.EntityFramework.DBProvider;
 public partial class ContextBase(DbContextOptions options) : DbContext(options)
 {
     public DbSet<SystemUser> SystemUsers { get; set; }
+    public DbSet<Application> Applications { get; set; }
+    public DbSet<Authorization> Authorizations { get; set; }
+    public DbSet<Scope> Scopes { get; set; }
+    public DbSet<Token> Tokens { get; set; }
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.Entity<Application>(e =>
+        {
+            e.OwnsMany(e => e.Properties).ToJson();
+        });
+
+        builder.Entity<Authorization>(e =>
+        {
+            e.OwnsMany(e => e.Properties).ToJson();
+        });
+        builder.Entity<Scope>(e =>
+        {
+            e.OwnsMany(e => e.Properties).ToJson();
+        });
+        builder.Entity<Token>(e =>
+        {
+            e.OwnsMany(e => e.Properties).ToJson();
+        });
 
         base.OnModelCreating(builder);
         OnModelExtendCreating(builder);

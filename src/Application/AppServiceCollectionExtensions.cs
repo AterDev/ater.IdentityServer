@@ -72,7 +72,6 @@ public static partial class AppServiceCollectionExtensions
                 sql.MigrationsAssembly("Http.API");
                 sql.CommandTimeout(10);
             });
-            option.UseOpenIddict<Guid>();
         });
         return builder;
     }
