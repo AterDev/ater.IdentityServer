@@ -1,0 +1,121 @@
+<mat-toolbar class="d-flex gap-1">
+  <!-- <mat-icon class="clickable" matTooltip="返回" (click)="back()">arrow_back</mat-icon> -->
+  <span>添加</span>
+</mat-toolbar>
+<form class="d-flex p-2" *ngIf="!isLoading" [formGroup]="formGroup">
+  <div class="d-flex flex-column w-100">
+
+    <mat-form-field>
+      <mat-label>Web/App/Client</mat-label>
+      <mat-select formControlName="applicationType">
+        <mat-option *ngFor="let item of ApplicationType | toKeyValue" [value]="item.value">
+          {{item.value | enumText:'ApplicationType'}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="applicationType?.invalid">
+        {{getValidatorMessage('applicationType')}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>ClientId</mat-label>
+      <input matInput placeholder="ClientId,不超过100字" formControlName="clientId" required minlength="" maxlength="100">
+      <mat-error *ngIf="clientId?.invalid">
+        {{getValidatorMessage('clientId')}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Secret</mat-label>
+      <input matInput placeholder="Secret,不超过120字" formControlName="clientSecret"  minlength="" maxlength="120">
+      <mat-error *ngIf="clientSecret?.invalid">
+        {{getValidatorMessage('clientSecret')}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Confidential as default</mat-label>
+      <mat-select formControlName="clientType">
+        <mat-option *ngFor="let item of ClientType | toKeyValue" [value]="item.value">
+          {{item.value | enumText:'ClientType'}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="clientType?.invalid">
+        {{getValidatorMessage('clientType')}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>同意书类型</mat-label>
+      <mat-select formControlName="consentType">
+        <mat-option *ngFor="let item of ConsentType | toKeyValue" [value]="item.value">
+          {{item.value | enumText:'ConsentType'}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="consentType?.invalid">
+        {{getValidatorMessage('consentType')}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>名称</mat-label>
+      <input matInput placeholder="名称,不超过100字" formControlName="displayName" required minlength="" maxlength="100">
+      <mat-error *ngIf="displayName?.invalid">
+        {{getValidatorMessage('displayName')}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>The permissions of application.</mat-label>
+      <input matInput placeholder="The permissions of application.,不超过0字" formControlName="permissions"  minlength="" maxlength="0">
+      <mat-error *ngIf="permissions?.invalid">
+        {{getValidatorMessage('permissions')}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>The post-logout redirect URIs of  application.</mat-label>
+      <input matInput placeholder="The post-logout redirect URIs of  application.,不超过0字" formControlName="postLogoutRedirectUris"  minlength="" maxlength="0">
+      <mat-error *ngIf="postLogoutRedirectUris?.invalid">
+        {{getValidatorMessage('postLogoutRedirectUris')}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>The properties of application.</mat-label>
+      <input matInput placeholder="The properties of application.,不超过0字" formControlName="properties"  minlength="" maxlength="0">
+      <mat-error *ngIf="properties?.invalid">
+        {{getValidatorMessage('properties')}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Gets the redirect URIs associated with the application.</mat-label>
+      <input matInput placeholder="Gets the redirect URIs associated with the application.,不超过0字" formControlName="redirectUris"  minlength="" maxlength="0">
+      <mat-error *ngIf="redirectUris?.invalid">
+        {{getValidatorMessage('redirectUris')}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>The requirements of application.</mat-label>
+      <input matInput placeholder="The requirements of application.,不超过0字" formControlName="requirements"  minlength="" maxlength="0">
+      <mat-error *ngIf="requirements?.invalid">
+        {{getValidatorMessage('requirements')}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>The settings of  application.</mat-label>
+      <input matInput placeholder="The settings of  application.,不超过0字" formControlName="settings"  minlength="" maxlength="0">
+      <mat-error *ngIf="settings?.invalid">
+        {{getValidatorMessage('settings')}}
+      </mat-error>
+    </mat-form-field>
+
+    <div class="d-flex mt-1 justify-content-end">
+      <button class="d-flex flex-column" mat-flat-button color="primary" (click)="add()">添加</button>
+    </div>
+  </div>
+</form>
+

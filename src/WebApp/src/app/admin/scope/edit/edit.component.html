@@ -1,0 +1,44 @@
+<mat-toolbar class="d-flex gap-1">
+  <!-- <mat-icon matTooltip="返回" (click)="back()">arrow_back</mat-icon> -->
+  <span>编辑</span>
+</mat-toolbar>
+<form class="d-flex p-2" *ngIf="!isLoading" [formGroup]="formGroup">
+  <div class="d-flex flex-column w-100">
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput placeholder="Description,不超过500字" formControlName="description"  minlength="" maxlength="500"
+      cols="5"></textarea>
+    <mat-error *ngIf="description?.invalid">
+    {{getValidatorMessage('description')}}
+    </mat-error>
+  </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>DisplayName</mat-label>
+      <input matInput placeholder="DisplayName,不超过100字" formControlName="displayName"  minlength="" maxlength="100">
+      <mat-error *ngIf="displayName?.invalid">
+        {{getValidatorMessage('displayName')}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Name,不超过100字" formControlName="name"  minlength="" maxlength="100">
+      <mat-error *ngIf="name?.invalid">
+        {{getValidatorMessage('name')}}
+      </mat-error>
+    </mat-form-field>
+  
+    <mat-form-field>
+      <mat-label>Properties</mat-label>
+      <input matInput placeholder="Properties,不超过0字" formControlName="properties"  minlength="" maxlength="0">
+      <mat-error *ngIf="properties?.invalid">
+        {{getValidatorMessage('properties')}}
+      </mat-error>
+    </mat-form-field>
+
+    <div class="d-flex mt-1 justify-content-end">
+      <button class="d-flex flex-column" mat-flat-button color="primary" (click)="edit()">保存</button>
+    </div>
+  </div>
+</form>
