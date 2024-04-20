@@ -4,38 +4,76 @@ namespace Definition.Entity;
 /// <summary>
 /// 授权类型
 /// </summary>
-public enum GrantTypes
+[Flags]
+public enum GrantType
 {
     /// <summary>
     /// 授权码
     /// </summary>
     [Description("授权码")]
-    AuthorizationCode,
+    AuthorizationCode = 1,
     /// <summary>
     /// 客户端凭证
     /// </summary>
     [Description("客户端凭证")]
-    ClientCredentials,
+    ClientCredentials = 1 << 1,
     /// <summary>
     /// 设备码
     /// </summary>
     [Description("设备码")]
-    DeviceCode,
+    DeviceCode = 1 << 2,
     /// <summary>
     /// 隐式
     /// </summary>
     [Description("隐式")]
-    Implicit,
+    Implicit = 1 << 3,
     /// <summary>
     /// 密码
     /// </summary>
     [Description("密码")]
-    Password,
+    Password = 1 << 4,
     /// <summary>
     /// 刷新令牌
     /// </summary>
     [Description("刷新令牌")]
-    RefreshToken,
+    RefreshToken = 1 << 5,
+}
+/// <summary>
+/// 终结点
+/// </summary>
+[Flags]
+public enum Endpoint
+{
+    /// <summary>
+    /// 授权
+    /// </summary>
+    [Description("授权")]
+    Authorization = 1,
+    /// <summary>
+    /// 设备
+    /// </summary>
+    [Description("设备")]
+    Device = 1 << 1,
+    /// <summary>
+    /// 检查
+    /// </summary>
+    [Description("检查")]
+    Introspection = 1 << 2,
+    /// <summary>
+    /// 注销
+    /// </summary>
+    [Description("注销")]
+    Logout = 1 << 3,
+    /// <summary>
+    /// 撤销
+    /// </summary>
+    [Description("撤销")]
+    Revocation = 1 << 4,
+    /// <summary>
+    /// 令牌
+    /// </summary>
+    [Description("令牌")]
+    Token = 1 << 5
 }
 
 /// <summary>
@@ -49,12 +87,12 @@ public enum ConsentType
     [Description("明确同意")]
     Explicit,
     /// <summary>
-    /// Systematic
+    /// 系统默认
     /// </summary>
     [Description("系统默认")]
     Systematic,
     /// <summary>
-    /// 隐式
+    /// 隐式同意
     /// </summary>
     [Description("隐式同意")]
     Implicit,
@@ -63,13 +101,13 @@ public enum ConsentType
 public enum ClientType
 {
     /// <summary>
-    /// Confidential
+    /// 机密
     /// </summary>
     [Description("机密")]
     Confidential,
 
     /// <summary>
-    /// Public
+    /// 公开
     /// </summary>
     [Description("公开")]
     Public
@@ -107,9 +145,9 @@ public enum Status
 public enum SubjectType
 {
     /// <summary>
-    /// 一对一
+    /// 成对
     /// </summary>
-    [Description("一对一")]
+    [Description("成对")]
     Pairwise,
     /// <summary>
     /// 公开
@@ -121,20 +159,52 @@ public enum SubjectType
 public enum ResponseType
 {
     /// <summary>
-    /// 表单提交
+    /// 授权码
     /// </summary>
-    [Description("表单提交")]
-    FormPost,
+    [Description("授权码")]
+    Code,
+
     /// <summary>
-    /// 片段
+    /// 授权码和身份令牌
     /// </summary>
-    [Description("片段")]
-    Fragment,
+    [Description("授权码和身份令牌")]
+    CodeIdToken,
+
     /// <summary>
-    /// 查询
+    /// 授权码、身份令牌和访问令牌
     /// </summary>
-    [Description("查询")]
-    Query
+    [Description("授权码、身份令牌和访问令牌")]
+    CodeIdTokenToken,
+
+    /// <summary>
+    /// 授权码和访问令牌
+    /// </summary>
+    [Description("授权码和访问令牌")]
+    CodeToken,
+
+    /// <summary>
+    /// 身份令牌
+    /// </summary>
+    [Description("身份令牌")]
+    IdToken,
+
+    /// <summary>
+    /// 身份令牌和访问令牌
+    /// </summary>
+    [Description("身份令牌和访问令牌")]
+    IdTokenToken,
+
+    /// <summary>
+    /// 无
+    /// </summary>
+    [Description("无")]
+    None,
+
+    /// <summary>
+    /// 访问令牌
+    /// </summary>
+    [Description("访问令牌")]
+    Token,
 }
 
 public enum ResponseMode
