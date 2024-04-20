@@ -10,6 +10,8 @@ export class ToKeyValuePipe implements PipeTransform {
       .filter(key => isNaN(Number(key)))
       .map((key) => ({ key, value: enumData[key] }));
 
+    console.log(result);
+
     return result;
   }
 }

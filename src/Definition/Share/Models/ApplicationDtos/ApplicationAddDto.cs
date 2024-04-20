@@ -42,20 +42,7 @@ public class ApplicationAddDto
     /// </summary>
     public ICollection<string> PostLogoutRedirectUris { get; set; } = [];
     /// <summary>
-    /// The properties of application.
-    /// </summary>
-    public ICollection<AdditionProperty> Properties { get; set; } = [];
-    /// <summary>
     /// Gets the redirect URIs associated with the application.
     /// </summary>
     public ICollection<string> RedirectUris { get; set; } = [];
-    /// <summary>
-    /// The requirements of application.
-    /// </summary>
-    public ICollection<string> Requirements { get; set; } = [];
-    /// <summary>
-    /// The settings of  application.
-    /// </summary>
-    public Dictionary<string, string>? Settings { get; set; }
-    
 }

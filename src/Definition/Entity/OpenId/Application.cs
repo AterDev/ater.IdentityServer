@@ -9,7 +9,7 @@
 public class Application : IEntityBase
 {
     /// <summary>
-    /// Web/App/Client
+    /// 应用类型
     /// </summary>
     public ApplicationType ApplicationType { get; set; } = ApplicationType.Web;
 
@@ -20,13 +20,13 @@ public class Application : IEntityBase
     public required string ClientId { get; set; }
 
     /// <summary>
-    /// Secret
+    /// ClientSecret
     /// </summary>
     [MaxLength(120)]
     public string? ClientSecret { get; set; }
 
     /// <summary>
-    /// Confidential as default
+    /// 机密
     /// </summary>
     public ClientType ClientType { get; set; } = ClientType.Confidential;
 
@@ -42,22 +42,22 @@ public class Application : IEntityBase
     public required string DisplayName { get; set; }
 
     /// <summary>
-    /// The permissions of application.
+    /// 权限
     /// </summary>
     public ICollection<string> Permissions { get; set; } = [];
 
     /// <summary>
-    /// The post-logout redirect URIs of  application.
+    /// 回调地址
     /// </summary>
     public ICollection<string> PostLogoutRedirectUris { get; set; } = [];
 
     /// <summary>
-    /// The properties of application.
+    /// 额外属性
     /// </summary>
     public ICollection<AdditionProperty> Properties { get; set; } = [];
 
     /// <summary>
-    /// Gets the redirect URIs associated with the application.
+    /// 回调地址
     /// </summary>
     public ICollection<string> RedirectUris { get; set; } = [];
 

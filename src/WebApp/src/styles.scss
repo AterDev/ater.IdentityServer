@@ -2,36 +2,36 @@
 
 html,
 body {
-    height: 100%;
-    font-family: sans-serif, "微软雅黑", Tahoma, Geneva, Verdana;
+  height: 100%;
+  font-family: sans-serif, "微软雅黑", Tahoma, Geneva, Verdana;
 }
 
 body {
-    margin: 0;
+  margin: 0;
 }
 
 img {
-    object-fit: cover;
+  object-fit: cover;
 }
 
 .loading {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 
 .avatar {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .w-100 {
-    width: 100%;
+  width: 100%;
 }
 
 .clickable {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .ck-editor__editable_inline {
-    min-height: 500px;
+  min-height: 500px;
 }
 
 .mat-mdc-list-item .mat-icon {

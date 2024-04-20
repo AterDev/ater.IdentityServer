@@ -14,7 +14,7 @@ export interface Application {
    */
   clientId: string;
   /**
-   * Secret
+   * ClientSecret
    */
   clientSecret?: string | null;
   clientType?: ClientType | null;
@@ -27,19 +27,19 @@ export interface Application {
    */
   displayName: string;
   /**
-   * The permissions of application.
+   * 权限
    */
   permissions: string[];
   /**
-   * The post-logout redirect URIs of  application.
+   * 回调地址
    */
   postLogoutRedirectUris: string[];
   /**
-   * The properties of application.
+   * 额外属性
    */
   properties?: AdditionProperty[];
   /**
-   * Gets the redirect URIs associated with the application.
+   * 回调地址
    */
   redirectUris: string[];
   /**

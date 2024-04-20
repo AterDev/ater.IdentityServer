@@ -50,7 +50,7 @@ export class IndexComponent implements OnInit {
   }
 
   getList(event?: PageEvent): void {
-    if(event) {
+    if (event) {
       this.filter.pageIndex = event.pageIndex + 1;
       this.filter.pageSize = event.pageSize;
     }
@@ -75,7 +75,7 @@ export class IndexComponent implements OnInit {
           this.isLoading = false;
         }
       });
-}
+  }
 
   jumpTo(pageNumber: string): void {
     const number = parseInt(pageNumber);
@@ -85,23 +85,12 @@ export class IndexComponent implements OnInit {
     }
   }
 
-  openAddDialog(): void {
-    this.dialogRef = this.dialog.open(AddComponent, {
-      minWidth: '400px',
-    })
-      this.dialogRef.afterClosed()
-      .subscribe(res => {
-        if (res)
-          this.getList();
-      });
-  }
-
   openEditDialog(item: ApplicationItemDto): void {
     this.dialogRef = this.dialog.open(EditComponent, {
       minWidth: '400px',
       data: { id: item.id }
     })
-      this.dialogRef.afterClosed()
+    this.dialogRef.afterClosed()
       .subscribe(res => {
         if (res)
           this.getList();
@@ -128,24 +117,24 @@ export class IndexComponent implements OnInit {
   delete(item: ApplicationItemDto): void {
     this.isProcessing = true;
     this.service.delete(item.id)
-    .subscribe({
-      next: (res) => {
-        if (res) {
-          this.data = this.data.filter(_ => _.id !== item.id);
-          this.dataSource.data = this.data;
-          this.snb.open('删除成功');
-        } else {
-          this.snb.open('删除失败');
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            this.data = this.data.filter(_ => _.id !== item.id);
+            this.dataSource.data = this.data;
+            this.snb.open('删除成功');
+          } else {
+            this.snb.open('删除失败');
+          }
+        },
+        error: (error) => {
+          this.snb.open(error.detail);
+        },
+        complete: () => {
+          this.isProcessing = false;
         }
-      },
-      error: (error) => {
-        this.snb.open(error.detail);
-      },
-      complete: ()=>{
-        this.isProcessing = false;
-      }
-    });
-}
+      });
+  }
 
   /**
    * 编辑
