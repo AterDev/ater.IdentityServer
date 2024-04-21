@@ -1,5 +1,3 @@
-using Definition.Entity;
-using Definition.Entity.OpenId;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
@@ -12,6 +10,7 @@ public partial class ContextBase(DbContextOptions options) : DbContext(options)
     public DbSet<Authorization> Authorizations { get; set; }
     public DbSet<Scope> Scopes { get; set; }
     public DbSet<Token> Tokens { get; set; }
+    public DbSet<Config> Configs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

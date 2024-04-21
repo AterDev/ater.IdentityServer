@@ -1,6 +1,14 @@
 ﻿namespace Definition.Entity;
 public static class Constants
 {
+    public static class Config
+    {
+        public const string DefaultGroup = "Default";
+        public const string PermissionGroup = "Permission";
+        public const string GrantType = "GrantType";
+        public const string Endpoint = "Endpoint";
+    }
+
     public static class Algorithms
     {
         public const string EcdsaSha256 = "ES256";

@@ -271,3 +271,32 @@ public enum TokenType
     [Description("Bearer")]
     Bearer
 }
+
+public enum ConfigValueType
+{
+    /// <summary>
+    /// 数字
+    /// </summary>
+    [Description("数字")]
+    Number,
+    /// <summary>
+    /// 字符串
+    /// </summary>
+    [Description("字符串")]
+    String,
+    /// <summary>
+    /// 布尔值
+    /// </summary>
+    [Description("布尔值")]
+    Boolean,
+    /// <summary>
+    /// 对象
+    /// </summary>
+    [Description("对象")]
+    Object,
+    /// <summary>
+    /// 数组
+    /// </summary>
+    [Description("数组")]
+    Array
+}
