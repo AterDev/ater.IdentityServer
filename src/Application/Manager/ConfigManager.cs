@@ -45,7 +45,6 @@ public class ConfigManager(
         return await Query.FilterAsync<ConfigItemDto>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);
     }
 
-
     /// <summary>
     /// 唯一性判断
     /// </summary>
@@ -69,4 +68,13 @@ public class ConfigManager(
         return await query.FirstOrDefaultAsync();
     }
 
+    /// <summary>
+    /// 获取所有枚举信息
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<string, List<EnumDictionary>> GetEnums()
+    {
+        // TODO:从缓存中获取
+        return EnumHelper.GetAllEnumInfo();
+    }
 }

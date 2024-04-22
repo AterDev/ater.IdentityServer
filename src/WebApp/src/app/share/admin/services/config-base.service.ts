@@ -6,6 +6,7 @@ import { ConfigAddDto } from '../models/config/config-add-dto.model';
 import { ConfigUpdateDto } from '../models/config/config-update-dto.model';
 import { ConfigItemDtoPageList } from '../models/config/config-item-dto-page-list.model';
 import { Config } from '../models/config/config.model';
+import { EnumDictionary } from '../models/config/enum-dictionary.model';
 
 /**
  * 配置
@@ -56,6 +57,14 @@ export class ConfigBaseService extends BaseService {
   delete(id: string): Observable<Config> {
     const _url = `/api/admin/Config/${id}`;
     return this.request<Config>('delete', _url);
+  }
+
+  /**
+   * 获取enums信息
+   */
+  getEnums(): Observable<Map<string, EnumDictionary[]>> {
+    const _url = `/api/admin/Config/enums`;
+    return this.request<Map<string, EnumDictionary[]>>('get', _url);
   }
 
 }

@@ -9,7 +9,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
-import { AddComponent } from '../add/add.component';
 import { EditComponent } from '../edit/edit.component';
 
 @Component({

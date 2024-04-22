@@ -66,6 +66,16 @@ public class ConfigController(
     }
 
     /// <summary>
+    /// 获取enums信息
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("enums")]
+    public Dictionary<string, List<EnumDictionary>> GetEnums()
+    {
+        return manager.GetEnums();
+    }
+
+    /// <summary>
     /// ⚠删除
     /// </summary>
     /// <param name="id"></param>

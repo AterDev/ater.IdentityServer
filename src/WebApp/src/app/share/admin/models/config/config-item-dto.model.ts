@@ -5,7 +5,7 @@ import { ConfigValueType } from '../enum/config-value-type.model';
 export interface ConfigItemDto {
   group: string;
   key: string;
-  value: string;
+  value: any;
   valueType?: ConfigValueType | null;
   id: string;
   createdTime: Date;

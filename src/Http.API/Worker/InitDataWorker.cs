@@ -16,6 +16,7 @@ public class InitDataWorker
         var systemUserManager = scope.ServiceProvider.GetRequiredService<SystemUserManager>();
 
         await InitSystemUserAsync(systemUserManager, logger);
+        await InitConfigsAsync(context, logger);
     }
 
     private static async Task InitConfigsAsync(CommandDbContext context, ILogger<InitDataWorker> logger)

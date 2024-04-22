@@ -20,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { EnumTextPipe } from './admin/pipe/enum-text.pipe';
 
 @NgModule({
   declarations: [ToKeyValuePipe],
@@ -76,3 +77,14 @@ const FormModules = [
   ]
 })
 export class FormModule { }
+
+
+
+
+@NgModule({
+  declarations: [EnumTextPipe],
+  exports: [
+    EnumTextPipe
+  ]
+})
+export class EnumPipeModule { }
