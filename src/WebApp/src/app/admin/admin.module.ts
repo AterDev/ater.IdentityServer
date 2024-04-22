@@ -7,11 +7,10 @@ import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { ApplicationModule } from './application/application.module';
 import { ScopeModule } from './scope/scope.module';
 import { ConfigModule } from './config/config.module';
-import { EnumTextPipe } from '../share/admin/pipe/enum-text.pipe';
 
 
 @NgModule({
-  declarations: [AdminLayoutComponent, EnumTextPipe],
+  declarations: [AdminLayoutComponent],
   imports: [
     CommonModule,
     ShareModule,

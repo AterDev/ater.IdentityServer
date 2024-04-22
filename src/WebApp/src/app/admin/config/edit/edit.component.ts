@@ -16,7 +16,7 @@ import { ConfigValueType } from 'src/app/share/admin/models/enum/config-value-ty
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-    ConfigValueType = ConfigValueType;
+  ConfigValueType = ConfigValueType;
 
   id!: string;
   isLoading = true;
@@ -24,8 +24,8 @@ export class EditComponent implements OnInit {
   data = {} as Config;
   updateData = {} as ConfigUpdateDto;
   formGroup!: FormGroup;
-    constructor(
-    
+  constructor(
+
     private service: ConfigService,
     private snb: MatSnackBar,
     private router: Router,
@@ -35,7 +35,7 @@ export class EditComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public dlgData: { id: '' }
   ) {
 
-    
+
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.id = id;
@@ -44,19 +44,19 @@ export class EditComponent implements OnInit {
     }
   }
 
-    get group() { return this.formGroup.get('group'); }
-    get key() { return this.formGroup.get('key'); }
-    get value() { return this.formGroup.get('value'); }
-    get valueType() { return this.formGroup.get('valueType'); }
+  get group() { return this.formGroup.get('group'); }
+  get key() { return this.formGroup.get('key'); }
+  get value() { return this.formGroup.get('value'); }
+  get valueType() { return this.formGroup.get('valueType'); }
 
 
   ngOnInit(): void {
     this.getDetail();
-    
+
     // TODO:等待数据加载完成
     // this.isLoading = false;
   }
-  
+
   getDetail(): void {
     this.service.getDetail(this.id)
       .subscribe({
@@ -90,32 +90,32 @@ export class EditComponent implements OnInit {
       case 'group':
         return this.group?.errors?.['required'] ? 'Group必填' :
           this.group?.errors?.['minlength'] ? 'Group长度最少位' :
-          this.group?.errors?.['maxlength'] ? 'Group长度最多100位' : '';
+            this.group?.errors?.['maxlength'] ? 'Group长度最多100位' : '';
       case 'key':
         return this.key?.errors?.['required'] ? 'Key必填' :
           this.key?.errors?.['minlength'] ? 'Key长度最少位' :
-          this.key?.errors?.['maxlength'] ? 'Key长度最多100位' : '';
+            this.key?.errors?.['maxlength'] ? 'Key长度最多100位' : '';
       case 'value':
         return this.value?.errors?.['required'] ? 'Value必填' :
           this.value?.errors?.['minlength'] ? 'Value长度最少位' :
-          this.value?.errors?.['maxlength'] ? 'Value长度最多0位' : '';
+            this.value?.errors?.['maxlength'] ? 'Value长度最多0位' : '';
       case 'valueType':
         return this.valueType?.errors?.['required'] ? 'ValueType必填' :
           this.valueType?.errors?.['minlength'] ? 'ValueType长度最少位' :
-          this.valueType?.errors?.['maxlength'] ? 'ValueType长度最多0位' : '';
+            this.valueType?.errors?.['maxlength'] ? 'ValueType长度最多0位' : '';
 
       default:
         return '';
     }
   }
   edit(): void {
-    if(this.formGroup.valid) {
+    if (this.formGroup.valid) {
       this.isProcessing = true;
       this.updateData = this.formGroup.value as ConfigUpdateDto;
       this.service.update(this.id, this.updateData)
         .subscribe({
           next: (res) => {
-            if(res){
+            if (res) {
               this.snb.open('修改成功');
               this.dialogRef.close(res);
               // this.router.navigate(['../../index'], { relativeTo: this.route });
@@ -130,7 +130,7 @@ export class EditComponent implements OnInit {
           }
         });
     } else {
-        this.snb.open('表单验证不通过，请检查填写的内容!');
+      this.snb.open('表单验证不通过，请检查填写的内容!');
     }
   }
 

@@ -4,15 +4,15 @@
 </mat-toolbar>
 <form class="d-flex p-2" *ngIf="!isLoading" [formGroup]="formGroup">
   <div class="d-flex flex-column w-100">
-  
+
     <mat-form-field>
       <mat-label>Group</mat-label>
-      <input matInput placeholder="Group,不超过100字" formControlName="group"  minlength="" maxlength="100">
+      <input matInput placeholder="Group,不超过100字" formControlName="group" minlength="" maxlength="100">
       <mat-error *ngIf="group?.invalid">
         {{getValidatorMessage('group')}}
       </mat-error>
     </mat-form-field>
-  
+
     <mat-form-field>
       <mat-label>Key</mat-label>
       <input matInput placeholder="Key,不超过100字" formControlName="key" required minlength="" maxlength="100">
@@ -20,7 +20,7 @@
         {{getValidatorMessage('key')}}
       </mat-error>
     </mat-form-field>
-  
+
     <mat-form-field>
       <mat-label>Value</mat-label>
       <input matInput placeholder="Value,不超过0字" formControlName="value" required minlength="" maxlength="0">
@@ -46,4 +46,3 @@
     </div>
   </div>
 </form>
-
