@@ -5,7 +5,6 @@ import { IndexComponent } from './index/index.component';
 import { AddComponent } from './add/add.component';
 import { DetailComponent } from './detail/detail.component';
 import { EditComponent } from './edit/edit.component';
-import { AdminLayoutComponent } from 'src/app/components/admin-layout/admin-layout.component';
 
 const routes: Routes = [
   {
@@ -19,7 +18,6 @@ const routes: Routes = [
       { path: 'edit/:id', component: EditComponent },
     ]
   }
-
 ];
 
 @NgModule({

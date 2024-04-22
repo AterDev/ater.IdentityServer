@@ -12,10 +12,16 @@
       <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon>storage</mat-icon>
+            <mat-icon>settings</mat-icon>
             <span *ngIf="opened">配置</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <mat-nav-list>
+          <a mat-list-item routerLink="./config" routerLinkActive="active">
+            <mat-icon>health_and_safety</mat-icon>
+            <span *ngIf="opened">服务权限</span>
+          </a>
+        </mat-nav-list>
         <mat-nav-list>
           <a mat-list-item routerLink="./application" routerLinkActive="active">
             <mat-icon>apps</mat-icon>
@@ -24,7 +30,7 @@
         </mat-nav-list>
         <mat-nav-list>
           <a mat-list-item routerLink="./scope" routerLinkActive="active">
-            <mat-icon>policy</mat-icon>
+            <mat-icon>ballot</mat-icon>
             <span *ngIf="opened">Scope管理</span>
           </a>
         </mat-nav-list>
