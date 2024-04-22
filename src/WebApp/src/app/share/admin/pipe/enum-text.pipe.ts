@@ -41,6 +41,19 @@ export class EnumTextPipe implements PipeTransform {
           }
         }
         break;
+      case 'ConfigValueType':
+        {
+            switch (value)
+        {
+            case 0: result = '数字'; break;
+            case 1: result = '字符串'; break;
+            case 2: result = '布尔值'; break;
+            case 3: result = '对象'; break;
+            case 4: result = '数组'; break;
+            default: '默认'; break;
+          }
+        }
+        break;
       case 'ConsentType':
         {
             switch (value)
@@ -69,7 +82,7 @@ export class EnumTextPipe implements PipeTransform {
         {
             switch (value)
         {
-            case 0: result = '一对一'; break;
+            case 0: result = '成对'; break;
             case 1: result = '公开'; break;
             default: '默认'; break;
           }

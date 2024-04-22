@@ -1,4 +1,3 @@
-using Definition.Entity.OpenId;
 namespace Definition.Share.Models.ConfigDtos;
 /// <summary>
 /// 配置概要
@@ -10,7 +9,7 @@ public class ConfigShortDto
     public string Group { get; set; } = Constants.Config.DefaultGroup;
     [MaxLength(100)]
     public string Key { get; set; } = default!;
-    public JsonDocument Value { get; set; } = default!;
+    public string Value { get; set; } = default!;
     public ConfigValueType ValueType { get; set; } = ConfigValueType.String;
-    
+
 }
