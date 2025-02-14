@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { LoginService } from '../auth/login.service';
+import { LoginService } from '../services/login.service';
 
 @Injectable()
 export class CustomerHttpInterceptor implements HttpInterceptor {

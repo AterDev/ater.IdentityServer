@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 // import { OAuthService, OAuthErrorEvent, UserInfo } from 'angular-oauth2-oidc';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoginService } from '../../auth/login.service';
+import { LoginService } from '../../services/login.service';
 import { SystemUserService } from 'src/app/share/admin/services/system-user.service';
 import { MatCardModule } from '@angular/material/card';
 import { FormModule } from 'src/app/share/share.module';
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.component.html',
-    imports: [FormModule, MatCardModule],
-    styleUrls: ['./login.component.scss']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  imports: [FormModule, MatCardModule],
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;

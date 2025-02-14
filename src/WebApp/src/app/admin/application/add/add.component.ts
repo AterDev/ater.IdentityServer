@@ -1,21 +1,28 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ApplicationService } from 'src/app/share/admin/services/application.service';
-import { Application } from 'src/app/share/admin/models/application/application.model';
-import { ApplicationAddDto } from 'src/app/share/admin/models/application/application-add-dto.model';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { Location, NgIf, NgFor } from '@angular/common';
 
-import { ApplicationType } from 'src/app/share/admin/models/enum/application-type.model';
-import { ClientType } from 'src/app/share/admin/models/enum/client-type.model';
-import { ConsentType } from 'src/app/share/admin/models/enum/consent-type.model';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatFormField, MatLabel, MatError, MatHint } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { EnumTextPipe } from 'src/app/pipe/admin/enum-text.pipe';
+import { ApplicationService } from 'src/app/services/admin/application/application.service';
+import { ApplicationAddDto } from 'src/app/services/admin/application/models/application-add-dto.model';
+import { ApplicationType } from 'src/app/services/admin/enum/models/application-type.model';
+import { ClientType } from 'src/app/services/admin/enum/models/client-type.model';
+import { ConsentType } from 'src/app/services/admin/enum/models/consent-type.model';
+import { ToKeyValuePipe } from 'src/app/share/pipe/to-key-value.pipe';
 
 @Component({
-    selector: 'app-add',
-    templateUrl: './add.component.html',
-    styleUrls: ['./add.component.css'],
-    standalone: false
+  selector: 'app-add',
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.css'],
+  imports: [MatToolbar, NgIf, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, MatError, MatInput, MatHint, MatButton, ToKeyValuePipe, EnumTextPipe]
 })
 export class AddComponent implements OnInit {
   ApplicationType = ApplicationType;

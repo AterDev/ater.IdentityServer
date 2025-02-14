@@ -1,22 +1,30 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Application } from 'src/app/share/admin/models/application/application.model';
-import { ApplicationService } from 'src/app/share/admin/services/application.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ApplicationUpdateDto } from 'src/app/share/admin/models/application/application-update-dto.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Location, NgIf, NgFor } from '@angular/common';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { ApplicationType } from 'src/app/share/admin/models/enum/application-type.model';
-import { ClientType } from 'src/app/share/admin/models/enum/client-type.model';
-import { ConsentType } from 'src/app/share/admin/models/enum/consent-type.model';
+import { MatToolbar } from '@angular/material/toolbar';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatSelect } from '@angular/material/select';
+import { MatOption } from '@angular/material/core';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
+import { EnumTextPipe } from 'src/app/pipe/admin/enum-text.pipe';
+import { ApplicationService } from 'src/app/services/admin/application/application.service';
+import { ApplicationUpdateDto } from 'src/app/services/admin/application/models/application-update-dto.model';
+import { Application } from 'src/app/services/admin/application/models/application.model';
+import { ApplicationType } from 'src/app/services/admin/enum/models/application-type.model';
+import { ClientType } from 'src/app/services/admin/enum/models/client-type.model';
+import { ConsentType } from 'src/app/services/admin/enum/models/consent-type.model';
+import { ToKeyValuePipe } from 'src/app/share/pipe/to-key-value.pipe';
 
 @Component({
-    selector: 'app-edit',
-    templateUrl: './edit.component.html',
-    styleUrls: ['./edit.component.css'],
-    standalone: false
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.css'],
+  imports: [MatToolbar, NgIf, ReactiveFormsModule, MatFormField, MatLabel, MatSelect, NgFor, MatOption, MatError, MatInput, MatButton, ToKeyValuePipe, EnumTextPipe]
 })
 export class EditComponent implements OnInit {
   ApplicationType = ApplicationType;

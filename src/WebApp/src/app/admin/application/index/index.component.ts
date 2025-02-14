@@ -1,21 +1,31 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { ApplicationService } from 'src/app/share/admin/services/application.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { ApplicationItemDto } from 'src/app/share/admin/models/application/application-item-dto.model';
-import { ApplicationFilterDto } from 'src/app/share/admin/models/application/application-filter-dto.model';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EditComponent } from '../edit/edit.component';
+import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, DatePipe } from '@angular/common';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { ApplicationService } from 'src/app/services/admin/application/application.service';
+import { ApplicationFilterDto } from 'src/app/services/admin/application/models/application-filter-dto.model';
+import { ApplicationItemDto } from 'src/app/services/admin/application/models/application-item-dto.model';
+import { ConfirmDialogComponent } from 'src/app/share/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
-    selector: 'app-index',
-    templateUrl: './index.component.html',
-    styleUrls: ['./index.component.css'],
-    standalone: false
+  selector: 'app-index',
+  templateUrl: './index.component.html',
+  styleUrls: ['./index.component.css'],
+  imports: [MatToolbar, MatToolbarRow, MatButton, RouterLink, MatIcon, NgIf, MatProgressSpinner, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatTooltip, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatDivider, MatFormField, MatLabel, MatInput, MatPaginator, MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, MatDialogActions, MatDialogClose, DatePipe]
 })
 export class IndexComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;

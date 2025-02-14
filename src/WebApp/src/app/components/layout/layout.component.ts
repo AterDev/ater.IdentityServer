@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
-import { LoginService } from '../../auth/login.service';
+import { NavigationStart, Router, RouterModule } from '@angular/router';
+import { baseMatModules } from 'src/app/app.config';
+import { LoginService } from 'src/app/services/login.service';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
-    selector: 'app-layout',
-    templateUrl: './layout.component.html',
-    styleUrls: ['./layout.component.css'],
-    standalone: false
+  selector: 'app-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.css'],
+  imports: [baseMatModules, MatMenuModule, RouterModule]
+
 })
 export class LayoutComponent implements OnInit {
   isLogin = false;

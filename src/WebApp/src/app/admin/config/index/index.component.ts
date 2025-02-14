@@ -1,20 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ConfigService } from 'src/app/share/admin/services/config.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ConfigItemDto } from 'src/app/share/admin/models/config/config-item-dto.model';
-import { ConfigFilterDto } from 'src/app/share/admin/models/config/config-filter-dto.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, forkJoin } from 'rxjs';
-import { EnumDictionary } from 'src/app/share/admin/models/config/enum-dictionary.model';
-import { ConfigItemDtoPageList } from 'src/app/share/admin/models/config/config-item-dto-page-list.model';
+import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
+import { NgIf } from '@angular/common';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatCheckbox } from '@angular/material/checkbox';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ConfigService } from 'src/app/services/admin/config/config.service';
+import { ConfigFilterDto } from 'src/app/services/admin/config/models/config-filter-dto.model';
+import { ConfigItemDtoPageList } from 'src/app/services/admin/config/models/config-item-dto-page-list.model';
+import { ConfigItemDto } from 'src/app/services/admin/config/models/config-item-dto.model';
+import { EnumDictionary } from 'src/app/services/admin/config/models/enum-dictionary.model';
 
 @Component({
-    selector: 'app-index',
-    templateUrl: './index.component.html',
-    styleUrls: ['./index.component.css'],
-    standalone: false
+  selector: 'app-index',
+  templateUrl: './index.component.html',
+  styleUrls: ['./index.component.css'],
+  imports: [MatToolbar, MatToolbarRow, NgIf, MatProgressSpinner, MatCheckbox, ReactiveFormsModule, FormsModule]
 })
 export class IndexComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;

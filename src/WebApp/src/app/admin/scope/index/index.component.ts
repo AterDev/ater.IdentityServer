@@ -1,22 +1,32 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { ScopeService } from 'src/app/share/admin/services/scope.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ConfirmDialogComponent } from 'src/app/components/confirm-dialog/confirm-dialog.component';
-import { ScopeItemDto } from 'src/app/share/admin/models/scope/scope-item-dto.model';
-import { ScopeFilterDto } from 'src/app/share/admin/models/scope/scope-filter-dto.model';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AddComponent } from '../add/add.component';
 import { EditComponent } from '../edit/edit.component';
+import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
+import { NgIf, DatePipe } from '@angular/common';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatDivider } from '@angular/material/divider';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { CdkScrollable } from '@angular/cdk/scrolling';
+import { ScopeFilterDto } from 'src/app/services/admin/scope/models/scope-filter-dto.model';
+import { ScopeItemDto } from 'src/app/services/admin/scope/models/scope-item-dto.model';
+import { ScopeService } from 'src/app/services/admin/scope/scope.service';
+import { ConfirmDialogComponent } from 'src/app/share/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
-    selector: 'app-index',
-    templateUrl: './index.component.html',
-    styleUrls: ['./index.component.css'],
-    standalone: false
+  selector: 'app-index',
+  templateUrl: './index.component.html',
+  styleUrls: ['./index.component.css'],
+  imports: [MatToolbar, MatToolbarRow, MatButton, MatIcon, NgIf, MatProgressSpinner, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatIconButton, MatTooltip, RouterLink, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatDivider, MatFormField, MatLabel, MatInput, MatPaginator, MatDialogTitle, CdkScrollable, MatDialogContent, ReactiveFormsModule, MatDialogActions, MatDialogClose, DatePipe]
 })
 export class IndexComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -51,7 +61,7 @@ export class IndexComponent implements OnInit {
   }
 
   getList(event?: PageEvent): void {
-    if(event) {
+    if (event) {
       this.filter.pageIndex = event.pageIndex + 1;
       this.filter.pageSize = event.pageSize;
     }
@@ -76,7 +86,7 @@ export class IndexComponent implements OnInit {
           this.isLoading = false;
         }
       });
-}
+  }
 
   jumpTo(pageNumber: string): void {
     const number = parseInt(pageNumber);
@@ -90,7 +100,7 @@ export class IndexComponent implements OnInit {
     this.dialogRef = this.dialog.open(AddComponent, {
       minWidth: '400px',
     })
-      this.dialogRef.afterClosed()
+    this.dialogRef.afterClosed()
       .subscribe(res => {
         if (res)
           this.getList();
@@ -102,7 +112,7 @@ export class IndexComponent implements OnInit {
       minWidth: '400px',
       data: { id: item.id }
     })
-      this.dialogRef.afterClosed()
+    this.dialogRef.afterClosed()
       .subscribe(res => {
         if (res)
           this.getList();
@@ -129,24 +139,24 @@ export class IndexComponent implements OnInit {
   delete(item: ScopeItemDto): void {
     this.isProcessing = true;
     this.service.delete(item.id)
-    .subscribe({
-      next: (res) => {
-        if (res) {
-          this.data = this.data.filter(_ => _.id !== item.id);
-          this.dataSource.data = this.data;
-          this.snb.open('删除成功');
-        } else {
-          this.snb.open('删除失败');
+      .subscribe({
+        next: (res) => {
+          if (res) {
+            this.data = this.data.filter(_ => _.id !== item.id);
+            this.dataSource.data = this.data;
+            this.snb.open('删除成功');
+          } else {
+            this.snb.open('删除失败');
+          }
+        },
+        error: (error) => {
+          this.snb.open(error.detail);
+        },
+        complete: () => {
+          this.isProcessing = false;
         }
-      },
-      error: (error) => {
-        this.snb.open(error.detail);
-      },
-      complete: ()=>{
-        this.isProcessing = false;
-      }
-    });
-}
+      });
+  }
 
   /**
    * 编辑
