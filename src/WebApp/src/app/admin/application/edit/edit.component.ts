@@ -13,9 +13,10 @@ import { ClientType } from 'src/app/share/admin/models/enum/client-type.model';
 import { ConsentType } from 'src/app/share/admin/models/enum/consent-type.model';
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+    selector: 'app-edit',
+    templateUrl: './edit.component.html',
+    styleUrls: ['./edit.component.css'],
+    standalone: false
 })
 export class EditComponent implements OnInit {
   ApplicationType = ApplicationType;

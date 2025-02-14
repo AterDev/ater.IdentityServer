@@ -8,11 +8,10 @@ import { MatCardModule } from '@angular/material/card';
 import { FormModule } from 'src/app/share/share.module';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  standalone: true,
-  imports: [FormModule, MatCardModule],
-  styleUrls: ['./login.component.scss']
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    imports: [FormModule, MatCardModule],
+    styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   public loginForm!: FormGroup;

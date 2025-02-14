@@ -2,9 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
-  selector: 'app-admin-layout',
-  templateUrl: './admin-layout.component.html',
-  styleUrl: './admin-layout.component.scss'
+    selector: 'app-admin-layout',
+    templateUrl: './admin-layout.component.html',
+    styleUrl: './admin-layout.component.scss',
+    standalone: false
 })
 export class AdminLayoutComponent {
   events: string[] = [];

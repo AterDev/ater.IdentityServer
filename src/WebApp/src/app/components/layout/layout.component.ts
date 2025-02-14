@@ -3,9 +3,10 @@ import { NavigationStart, Router } from '@angular/router';
 import { LoginService } from '../../auth/login.service';
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.css']
+    selector: 'app-layout',
+    templateUrl: './layout.component.html',
+    styleUrls: ['./layout.component.css'],
+    standalone: false
 })
 export class LayoutComponent implements OnInit {
   isLogin = false;

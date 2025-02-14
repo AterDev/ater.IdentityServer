@@ -11,9 +11,10 @@ import { EnumDictionary } from 'src/app/share/admin/models/config/enum-dictionar
 import { ConfigItemDtoPageList } from 'src/app/share/admin/models/config/config-item-dto-page-list.model';
 
 @Component({
-  selector: 'app-index',
-  templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+    selector: 'app-index',
+    templateUrl: './index.component.html',
+    styleUrls: ['./index.component.css'],
+    standalone: false
 })
 export class IndexComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;

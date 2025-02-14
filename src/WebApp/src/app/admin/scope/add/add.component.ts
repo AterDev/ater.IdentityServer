@@ -12,7 +12,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 @Component({
     selector: 'app-add',
     templateUrl: './add.component.html',
-    styleUrls: ['./add.component.css']
+    styleUrls: ['./add.component.css'],
+    standalone: false
 })
 export class AddComponent implements OnInit {
     
