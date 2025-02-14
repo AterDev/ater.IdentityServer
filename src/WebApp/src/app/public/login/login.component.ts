@@ -3,14 +3,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
-import { SystemUserService } from 'src/app/share/admin/services/system-user.service';
 import { MatCardModule } from '@angular/material/card';
-import { FormModule } from 'src/app/share/share.module';
+import { SystemUserService } from 'src/app/services/admin/system-user/system-user.service';
+import { CommonFormModules } from 'src/app/app.config';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  imports: [FormModule, MatCardModule],
+  imports: [CommonFormModules, MatCardModule],
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {

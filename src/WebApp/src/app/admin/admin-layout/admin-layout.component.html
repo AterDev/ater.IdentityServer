@@ -1,6 +1,6 @@
-<mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav mode="side" opened="true">
-    <div class="d-flex flex-row-reverse">
+<mat-drawer-container class="example-container" autosize="">
+  <mat-drawer #sidenav mode="side" opened="true">
+    <div class="d-flex justify-content-end" style="overflow: hidden;">
       <button mat-icon-button *ngIf="opened" (click)="toggle()">
         <mat-icon>keyboard_double_arrow_left</mat-icon>
       </button>
@@ -8,12 +8,16 @@
         <mat-icon>keyboard_double_arrow_right</mat-icon>
       </button>
     </div>
-    <mat-accordion class="example-headers-align" multi>
-      <mat-expansion-panel hideToggle>
+
+    <mat-accordion multi style="width: auto;">
+      <mat-expansion-panel hideToggle [expanded]="expanded">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            <mat-icon>settings</mat-icon>
-            <span *ngIf="opened">配置</span>
+            <div class="nav-title" [matTooltip]="opened?'': '配置'" matTooltipPosition="right">
+              <mat-icon>settings</mat-icon>
+              <span *ngIf="opened">配置</span>
+            </div>
+
           </mat-panel-title>
         </mat-expansion-panel-header>
         <mat-nav-list>
@@ -36,8 +40,8 @@
         </mat-nav-list>
       </mat-expansion-panel>
     </mat-accordion>
-  </mat-sidenav>
-  <mat-sidenav-content class="px-2">
+  </mat-drawer>
+  <mat-drawer-content class="px-1">
     <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </mat-drawer-content>
+</mat-drawer-container>
