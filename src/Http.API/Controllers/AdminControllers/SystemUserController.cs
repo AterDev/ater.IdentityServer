@@ -26,7 +26,7 @@ public class SystemUserController(
     public async Task<ActionResult<SystemUser>> RegisterAsync(RegisterDto dto)
     {
         // 判断重复用户名
-        if (manager.Query.Db.Any(q => q.UserName.Equals(dto.UserName)))
+        if (await _manager.ExistAsync(q => q.UserName.Equals(dto.UserName)))
         {
             return Conflict(ErrorMsg.ExistUser);
         }
@@ -48,7 +48,7 @@ public class SystemUserController(
                 return BadRequest("验证码错误");
             }
         }
-        return await manager.RegisterAsync(dto);
+        return await _manager.RegisterAsync(dto);
     }
 
     /// <summary>
@@ -61,8 +61,8 @@ public class SystemUserController(
     public async Task<ActionResult<LoginResult>> LoginAsync(LoginDto dto)
     {
         // 查询用户
-        SystemUser? user = await manager.Query.Db.Where(u => u.UserName.Equals(dto.UserName))
-            .FirstOrDefaultAsync();
+        SystemUser? user = await _manager.FindAsync<SystemUser>(u => u.UserName.Equals(dto.UserName));
+
         if (user == null)
         {
             return NotFound("不存在该用户");
@@ -134,7 +134,7 @@ public class SystemUserController(
     [HttpPut("logout/{id}")]
     public async Task<ActionResult<bool>> LogoutAsync([FromRoute] Guid id)
     {
-        if (await manager.ExistAsync(id))
+        if (await _manager.ExistAsync(id))
         {
             // 清除缓存状态
             await _cache.RemoveAsync(AppConst.LoginCachePrefix + id.ToString());
@@ -150,14 +150,14 @@ public class SystemUserController(
     [HttpPut("changePassword")]
     public async Task<ActionResult<bool>> ChangePassword(string password, string newPassword)
     {
-        if (!await manager.ExistAsync(_user.UserId))
+        if (!await _manager.ExistAsync(_user.UserId))
         {
             return NotFound("");
         }
-        SystemUser? user = await manager.GetCurrentAsync(_user.UserId);
+        SystemUser? user = await _manager.GetCurrentAsync(_user.UserId);
         return !HashCrypto.Validate(password, user!.PasswordSalt, user.PasswordHash)
             ? (ActionResult<bool>)Problem("当前密码不正确")
-            : await manager.ChangePasswordAsync(user, newPassword);
+            : await _manager.ChangePasswordAsync(user, newPassword);
     }
 
     /// <summary>
@@ -166,14 +166,15 @@ public class SystemUserController(
     /// <param name="dto"></param>
     /// <returns></returns>
     [HttpPut]
-    public async Task<ActionResult<SystemUser?>> UpdateAsync(SystemUserUpdateDto dto)
+    public async Task<ActionResult<bool>> UpdateAsync(SystemUserUpdateDto dto)
     {
-        SystemUser? current = await manager.GetCurrentAsync(_user.UserId);
+        SystemUser? current = await _manager.GetCurrentAsync(_user.UserId);
         if (current == null)
         {
             return NotFound(ErrorMsg.NotFoundResource);
-        };
-        return await manager.UpdateAsync(current, dto);
+        }
+        ;
+        return await _manager.UpdateAsync(current, dto);
     }
 
     /// <summary>
@@ -183,7 +184,7 @@ public class SystemUserController(
     [HttpGet]
     public async Task<ActionResult<SystemUser?>> GetDetailAsync()
     {
-        SystemUser? res = await manager.FindAsync(_user.UserId);
+        SystemUser? res = await _manager.FindAsync(_user.UserId);
         return res == null ? NotFound(ErrorMsg.NotFoundResource) : res;
     }
 }

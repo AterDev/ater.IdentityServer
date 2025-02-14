@@ -1,13 +1,15 @@
 using Definition.Share.Models.ApplicationDtos;
 
+using OpenIdApplication = Definition.Entity.OpenId.Application;
+
 namespace Application.Manager;
 /// <summary>
 /// Application
 /// </summary>
 public class ApplicationManager(
-    DataAccessContext<Definition.Entity.OpenId.Application> dataContext,
+    DataAccessContext<OpenIdApplication> dataContext,
     ILogger<ApplicationManager> logger,
-    IUserContext userContext) : ManagerBase<Definition.Entity.OpenId.Application, ApplicationUpdateDto, ApplicationFilterDto, ApplicationItemDto>(dataContext, logger)
+    IUserContext userContext) : ManagerBase<OpenIdApplication>(dataContext, logger)
 {
     private readonly IUserContext _userContext = userContext;
 
@@ -16,9 +18,9 @@ public class ApplicationManager(
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
-    public async Task<Definition.Entity.OpenId.Application> CreateNewEntityAsync(ApplicationAddDto dto)
+    public async Task<Guid?> AddAsync(ApplicationAddDto dto)
     {
-        var entity = dto.MapTo<ApplicationAddDto, Definition.Entity.OpenId.Application>();
+        var entity = dto.MapTo<ApplicationAddDto, OpenIdApplication>();
         /*
         if (dto.AuthorizationIds != null && dto.AuthorizationIds.Count > 0)
         {
@@ -44,11 +46,12 @@ public class ApplicationManager(
         }
         */
         // other required props
-        return await Task.FromResult(entity);
+        return await AddAsync(entity) ? entity.Id : null;
     }
 
-    public override async Task<Definition.Entity.OpenId.Application> UpdateAsync(Definition.Entity.OpenId.Application entity, ApplicationUpdateDto dto)
+    public async Task<bool> UpdateAsync(OpenIdApplication entity, ApplicationUpdateDto dto)
     {
+        entity.Merge(dto);
         /*
         if (dto.AuthorizationIds != null && dto.AuthorizationIds.Count > 0)
         {
@@ -73,18 +76,18 @@ public class ApplicationManager(
             }
         }
         */
-        return await base.UpdateAsync(entity, dto);
+        return await UpdateAsync(entity);
     }
 
-    public override async Task<PageList<ApplicationItemDto>> FilterAsync(ApplicationFilterDto filter)
+    public async Task<PageList<ApplicationItemDto>> ToPageAsync(ApplicationFilterDto filter)
     {
         Queryable = Queryable
             .WhereNotNull(filter.ApplicationType, q => q.ApplicationType == filter.ApplicationType)
             .WhereNotNull(filter.ClientType, q => q.ClientType == filter.ClientType)
             .WhereNotNull(filter.ConsentType, q => q.ConsentType == filter.ConsentType)
             .WhereNotNull(filter.DisplayName, q => q.DisplayName == filter.DisplayName);
-        // TODO: custom filter conditions
-        return await Query.FilterAsync<ApplicationItemDto>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);
+
+        return await ToPageAsync<ApplicationFilterDto, ApplicationItemDto>(filter);
     }
 
     /// <summary>
@@ -94,7 +97,7 @@ public class ApplicationManager(
     public async Task<bool> IsUniqueAsync(string unique)
     {
         // TODO:自定义唯一性验证参数和逻辑
-        return await Command.Db.AnyAsync(q => q.Id == new Guid(unique));
+        return await Command.AnyAsync(q => q.Id == new Guid(unique));
     }
 
     /// <summary>
@@ -102,9 +105,9 @@ public class ApplicationManager(
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    public async Task<Definition.Entity.OpenId.Application?> GetOwnedAsync(Guid id)
+    public async Task<OpenIdApplication?> GetOwnedAsync(Guid id)
     {
-        var query = Command.Db.Where(q => q.Id == id);
+        var query = Command.Where(q => q.Id == id);
         // 获取用户所属的对象
         // query = query.Where(q => q.User.Id == _userContext.UserId);
         return await query.FirstOrDefaultAsync();

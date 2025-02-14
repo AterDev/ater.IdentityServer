@@ -20,7 +20,7 @@ public class ScopeController(
     [HttpPost("filter")]
     public async Task<ActionResult<PageList<ScopeItemDto>>> FilterAsync(ScopeFilterDto filter)
     {
-        return await manager.FilterAsync(filter);
+        return await _manager.ToPageAsync(filter);
     }
 
     /// <summary>
@@ -29,10 +29,9 @@ public class ScopeController(
     /// <param name="dto"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<Scope>> AddAsync(ScopeAddDto dto)
+    public async Task<ActionResult<Guid?>> AddAsync(ScopeAddDto dto)
     {
-        var entity = await manager.CreateNewEntityAsync(dto);
-        return await manager.AddAsync(entity);
+        return await _manager.AddAsync(dto);
     }
 
     /// <summary>
@@ -42,11 +41,12 @@ public class ScopeController(
     /// <param name="dto"></param>
     /// <returns></returns>
     [HttpPatch("{id}")]
-    public async Task<ActionResult<Scope?>> UpdateAsync([FromRoute] Guid id, ScopeUpdateDto dto)
+    public async Task<ActionResult<bool>> UpdateAsync([FromRoute] Guid id, ScopeUpdateDto dto)
     {
-        var current = await manager.GetCurrentAsync(id);
-        if (current == null) { return NotFound("不存在的资源"); };
-        return await manager.UpdateAsync(current, dto);
+        var current = await _manager.GetCurrentAsync(id);
+        if (current == null) { return NotFound("不存在的资源"); }
+        ;
+        return await _manager.UpdateAsync(current, dto);
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class ScopeController(
     [HttpGet("{id}")]
     public async Task<ActionResult<Scope?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        var res = await _manager.FindAsync(id);
         return (res == null) ? NotFound() : res;
     }
 
@@ -68,12 +68,13 @@ public class ScopeController(
     /// <returns></returns>
     // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Scope?>> DeleteAsync([FromRoute] Guid id)
+    public async Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
     {
         // 注意删除权限
-        var entity = await manager.GetCurrentAsync(id);
-        if (entity == null) { return NotFound(); };
+        var entity = await _manager.GetCurrentAsync(id);
+        if (entity == null) { return NotFound(); }
+        ;
         // return Forbid();
-        return await manager.DeleteAsync(entity);
+        return await _manager.DeleteAsync(entity);
     }
 }

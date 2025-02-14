@@ -41,7 +41,7 @@ public class InitDataWorker
                 Email = "admin@ater.com",
                 Password = "docs.dusi.dev"
             };
-            await manager.CreateNewEntityAsync(user);
+            await manager.AddAsync(user);
             logger.LogInformation("Init systemUse:{UserName}/{Password}", user.UserName, user.Password);
         }
     }

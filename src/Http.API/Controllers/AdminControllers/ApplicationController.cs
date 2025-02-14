@@ -1,10 +1,12 @@
 using Definition.Share.Models.ApplicationDtos;
+using OpenIdApplication = Definition.Entity.OpenId.Application;
+
 namespace Http.API.Controllers.AdminControllers;
 
 /// <summary>
 /// Application
 /// </summary>
-/// <see cref="Application.Manager.ApplicationManager"/>
+/// <see cref="ApplicationManager"/>
 public class ApplicationController(
     IUserContext user,
     ILogger<ApplicationController> logger,
@@ -20,7 +22,7 @@ public class ApplicationController(
     [HttpPost("filter")]
     public async Task<ActionResult<PageList<ApplicationItemDto>>> FilterAsync(ApplicationFilterDto filter)
     {
-        return await manager.FilterAsync(filter);
+        return await _manager.ToPageAsync(filter);
     }
 
     /// <summary>
@@ -29,10 +31,9 @@ public class ApplicationController(
     /// <param name="dto"></param>
     /// <returns></returns>
     [HttpPost]
-    public async Task<ActionResult<Definition.Entity.OpenId.Application>> AddAsync(ApplicationAddDto dto)
+    public async Task<ActionResult<Guid?>> AddAsync(ApplicationAddDto dto)
     {
-        var entity = await manager.CreateNewEntityAsync(dto);
-        return await manager.AddAsync(entity);
+        return await _manager.AddAsync(dto);
     }
 
     /// <summary>
@@ -42,11 +43,11 @@ public class ApplicationController(
     /// <param name="dto"></param>
     /// <returns></returns>
     [HttpPatch("{id}")]
-    public async Task<ActionResult<Definition.Entity.OpenId.Application?>> UpdateAsync([FromRoute] Guid id, ApplicationUpdateDto dto)
+    public async Task<ActionResult<bool>> UpdateAsync([FromRoute] Guid id, ApplicationUpdateDto dto)
     {
-        var current = await manager.GetCurrentAsync(id);
+        var current = await _manager.GetCurrentAsync(id);
         if (current == null) { return NotFound("不存在的资源"); };
-        return await manager.UpdateAsync(current, dto);
+        return await _manager.UpdateAsync(current, dto);
     }
 
     /// <summary>
@@ -55,9 +56,9 @@ public class ApplicationController(
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public async Task<ActionResult<Definition.Entity.OpenId.Application?>> GetDetailAsync([FromRoute] Guid id)
+    public async Task<ActionResult<OpenIdApplication?>> GetDetailAsync([FromRoute] Guid id)
     {
-        var res = await manager.FindAsync(id);
+        var res = await _manager.FindAsync(id);
         return (res == null) ? NotFound() : res;
     }
 
@@ -68,12 +69,12 @@ public class ApplicationController(
     /// <returns></returns>
     // [ApiExplorerSettings(IgnoreApi = true)]
     [HttpDelete("{id}")]
-    public async Task<ActionResult<Definition.Entity.OpenId.Application?>> DeleteAsync([FromRoute] Guid id)
+    public async Task<ActionResult<bool>> DeleteAsync([FromRoute] Guid id)
     {
         // 注意删除权限
-        var entity = await manager.GetCurrentAsync(id);
+        var entity = await _manager.GetCurrentAsync(id);
         if (entity == null) { return NotFound(); };
         // return Forbid();
-        return await manager.DeleteAsync(entity);
+        return await _manager.DeleteAsync(entity);
     }
 }

@@ -7,7 +7,7 @@ namespace Application.Manager;
 public class SystemUserManager(
     DataAccessContext<SystemUser> dataContext,
     ILogger<SystemUserManager> logger,
-    IUserContext userContext) : ManagerBase<SystemUser, SystemUserUpdateDto, SystemUserFilterDto, SystemUserItemDto>(dataContext, logger)
+    IUserContext userContext) : ManagerBase<SystemUser>(dataContext, logger)
 {
     private readonly IUserContext _userContext = userContext;
 
@@ -22,7 +22,7 @@ public class SystemUserManager(
         user.PasswordSalt = HashCrypto.BuildSalt();
         user.PasswordHash = HashCrypto.GeneratePwd(newPassword, user.PasswordSalt);
         Command.Update(user);
-        return await Command.SaveChangesAsync() > 0;
+        return await SaveChangesAsync() > 0;
     }
 
     /// <summary>
@@ -51,7 +51,7 @@ public class SystemUserManager(
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
-    public async Task<SystemUser> CreateNewEntityAsync(SystemUserAddDto dto)
+    public async Task<SystemUser> AddAsync(SystemUserAddDto dto)
     {
         var user = new SystemUser
         {
@@ -67,17 +67,17 @@ public class SystemUserManager(
         return user;
     }
 
-    public override async Task<SystemUser> UpdateAsync(SystemUser entity, SystemUserUpdateDto dto)
+    public async Task<bool> UpdateAsync(SystemUser entity, SystemUserUpdateDto dto)
     {
         if (dto.Password != null && _userContext != null && _userContext.IsAdmin)
         {
             entity.PasswordSalt = HashCrypto.BuildSalt();
             entity.PasswordHash = HashCrypto.GeneratePwd(dto.Password, entity.PasswordSalt);
         }
-        return await base.UpdateAsync(entity, dto);
+        return await base.UpdateAsync(entity);
     }
 
-    public override async Task<PageList<SystemUserItemDto>> FilterAsync(SystemUserFilterDto filter)
+    public async Task<PageList<SystemUserItemDto>> ToPageAsync(SystemUserFilterDto filter)
     {
         Queryable = Queryable
             .WhereNotNull(filter.UserName, q => q.UserName == filter.UserName)
@@ -86,7 +86,17 @@ public class SystemUserManager(
             .WhereNotNull(filter.EmailConfirmed, q => q.EmailConfirmed == filter.EmailConfirmed)
             .WhereNotNull(filter.PhoneNumberConfirmed, q => q.PhoneNumberConfirmed == filter.PhoneNumberConfirmed);
 
-        return await Query.FilterAsync<SystemUserItemDto>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);
+        return await ToPageAsync<SystemUserFilterDto, SystemUserItemDto>(filter);
+    }
+
+    /// <summary>
+    /// 是否存在
+    /// </summary>
+    /// <param name="userName"></param>
+    /// <returns></returns>
+    public async Task<bool> IsExistAsync(string userName)
+    {
+        return await Query.AnyAsync(q => q.UserName == userName);
     }
 
     /// <summary>
@@ -96,7 +106,7 @@ public class SystemUserManager(
     /// <returns></returns>
     public async Task<SystemUser?> GetOwnedAsync(Guid id)
     {
-        IQueryable<SystemUser> query = Command.Db.Where(q => q.Id == id);
+        IQueryable<SystemUser> query = Command.Where(q => q.Id == id);
         // 获取用户所属的对象
         return await query.FirstOrDefaultAsync();
     }

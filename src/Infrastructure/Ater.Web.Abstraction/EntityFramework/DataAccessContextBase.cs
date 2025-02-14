@@ -4,17 +4,24 @@ namespace Ater.Web.Abstraction.EntityFramework;
 /// <summary>
 /// 数据访问层抽象
 /// </summary>
-public class DataAccessContextBase<TCommandContext, TQueryContext, TEntity>(TCommandContext commandDbContext, TQueryContext queryDbContext)
+public class DataAccessContextBase<TCommandContext, TQueryContext, TEntity>(TCommandContext commandDbContext, TQueryContext queryDbContext) : DataAccessContextBase<TCommandContext, TQueryContext>(commandDbContext, queryDbContext)
     where TCommandContext : DbContext
     where TQueryContext : DbContext
     where TEntity : class, IEntityBase
 {
-    private readonly TCommandContext _commandDbContext = commandDbContext;
-    private readonly TQueryContext _queryDbContext = queryDbContext;
+}
 
+/// <summary>
+/// DataAccessContextBase without TEntity
+/// </summary>
+/// <typeparam name="TCommandContext"></typeparam>
+/// <typeparam name="TQueryContext"></typeparam>
+/// <param name="commandDbContext"></param>
+/// <param name="queryDbContext"></param>
+public class DataAccessContextBase<TCommandContext, TQueryContext>(TCommandContext commandDbContext, TQueryContext queryDbContext)
+    where TCommandContext : DbContext
+    where TQueryContext : DbContext
+{
     public TQueryContext QueryContext { get; init; } = queryDbContext;
     public TCommandContext CommandContext { get; init; } = commandDbContext;
-
-    public QuerySet<TQueryContext, TEntity> QuerySet() => new(_queryDbContext);
-    public CommandSet<TCommandContext, TEntity> CommandSet() => new(_commandDbContext);
 }

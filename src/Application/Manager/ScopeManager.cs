@@ -6,9 +6,9 @@ namespace Application.Manager;
 /// Scope
 /// </summary>
 public class ScopeManager(
-    DataAccessContext<Scope> dataContext, 
+    DataAccessContext<Scope> dataContext,
     ILogger<ScopeManager> logger,
-    IUserContext userContext) : ManagerBase<Scope, ScopeUpdateDto, ScopeFilterDto, ScopeItemDto>(dataContext, logger)
+    IUserContext userContext) : ManagerBase<Scope>(dataContext, logger)
 {
     private readonly IUserContext _userContext = userContext;
 
@@ -17,22 +17,22 @@ public class ScopeManager(
     /// </summary>
     /// <param name="dto"></param>
     /// <returns></returns>
-    public async Task<Scope> CreateNewEntityAsync(ScopeAddDto dto)
+    public async Task<Guid?> AddAsync(ScopeAddDto dto)
     {
         var entity = dto.MapTo<ScopeAddDto, Scope>();
-        // other required props
-        return await Task.FromResult(entity);
+        return await AddAsync(entity) ? entity.Id : null;
     }
 
-    public override async Task<Scope> UpdateAsync(Scope entity, ScopeUpdateDto dto)
+    public async Task<bool> UpdateAsync(Scope entity, ScopeUpdateDto dto)
     {
-        return await base.UpdateAsync(entity, dto);
+        entity.Merge(dto);
+        return await UpdateAsync(entity);
     }
 
-    public override async Task<PageList<ScopeItemDto>> FilterAsync(ScopeFilterDto filter)
+    public async Task<PageList<ScopeItemDto>> ToPageAsync(ScopeFilterDto filter)
     {
-        // TODO: custom filter conditions
-        return await Query.FilterAsync<ScopeItemDto>(Queryable, filter.PageIndex, filter.PageSize, filter.OrderBy);
+        // TODO: custom filter conditionsr
+        return await ToPageAsync<ScopeFilterDto, ScopeItemDto>(filter);
     }
 
 
@@ -43,7 +43,7 @@ public class ScopeManager(
     public async Task<bool> IsUniqueAsync(string unique)
     {
         // TODO:自定义唯一性验证参数和逻辑
-        return await Command.Db.AnyAsync(q => q.Id == new Guid(unique));
+        return await Command.AnyAsync(q => q.Id == new Guid(unique));
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ public class ScopeManager(
     /// <returns></returns>
     public async Task<Scope?> GetOwnedAsync(Guid id)
     {
-        var query = Command.Db.Where(q => q.Id == id);
+        var query = Command.Where(q => q.Id == id);
         // 获取用户所属的对象
         // query = query.Where(q => q.User.Id == _userContext.UserId);
         return await query.FirstOrDefaultAsync();
