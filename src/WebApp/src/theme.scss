@@ -154,28 +154,28 @@ $light-colors: (
   )
 );
 
-$light-primary: mat.define-palette($light-colors, 500, 700, 900);
-$light-accent: mat.define-palette($accent-colors, 500, 700, 900);
-$light-warn: mat.define-palette($warn-colors, 500, 700, 900);
+$light-primary: mat.m2-define-palette($light-colors, 500, 700, 900);
+$light-accent: mat.m2-define-palette($accent-colors, 500, 700, 900);
+$light-warn: mat.m2-define-palette($warn-colors, 500, 700, 900);
 
-$dark-primary: mat.define-palette($dark-colors, 500, 600, 700);
-$dark-accent: mat.define-palette($accent-colors, 500, 600, 700);
-$dark-warn: mat.define-palette($warn-colors, 500, 700, 900);
+$dark-primary: mat.m2-define-palette($dark-colors, 500, 600, 700);
+$dark-accent: mat.m2-define-palette($accent-colors, 500, 600, 700);
+$dark-warn: mat.m2-define-palette($warn-colors, 500, 700, 900);
 
-$dark-theme: mat.define-dark-theme((color: (primary: $dark-primary,
+$dark-theme: mat.m2-define-dark-theme((color: (primary: $dark-primary,
         accent: $dark-accent,
         warn: $dark-warn,
       ),
-      typography: mat.define-typography-config(),
+      typography: mat.m2-define-typography-config(),
       density: 0,
     ));
 
 
-$light-theme: mat.define-light-theme((color: (primary: $light-primary,
+$light-theme: mat.m2-define-light-theme((color: (primary: $light-primary,
         accent: $light-accent,
         warn: $light-warn,
       ),
-      typography: mat.define-typography-config(),
+      typography: mat.m2-define-typography-config(),
       density: 0,
     ));
 
@@ -332,7 +332,7 @@ $light-theme: mat.define-light-theme((color: (primary: $light-primary,
   }
 
   .active {
-    background-color: mat.get-color-from-palette($dark-primary, 500) !important;
+    background-color: mat.m2-get-color-from-palette($dark-primary, 500) !important;
   }
 
   .mat-app-background {
